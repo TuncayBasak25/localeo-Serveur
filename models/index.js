@@ -15,7 +15,7 @@ if (config.use_env_variable) {
     dialect:  'postgres',
     protocol: 'postgres',
     port:     5432,
-    host:     'dla3bedrnphjg',
+    host:     'd8les5efop7fc',
     logging:  true //false
   })
 } else {
