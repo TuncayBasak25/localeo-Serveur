@@ -44,7 +44,7 @@ app.use(session({
 }))
 //////////
 
-const fileUpload = require('express-fileUpload');
+const fileUpload = require('express-fileupload');
 app.use(fileUpload({
   limits: { fileSize: 50 * 1024 * 1024 },
 }));
