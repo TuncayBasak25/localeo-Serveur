@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  form(id="register", action="/register", method="POST")
+  form(id="login", action="/login", method="GET")
+
+  div(class="d-flex justify-content-center align-items-center" style="height: 100vh")
+    div(class="w-25")
+      input(type="text", form="register", name="username", placeholder="Username", value=body ? body.username : '', class="m-2 form-control")
+      input(type="email", form="register", name="email", placeholder="Email", value=body ? body.email : '', class="m-2 form-control")
+      input(type="password" form="register", name="password", placeholder="Password", class="m-2 form-control")
+      input(type="password" form="register", name="passwordConfirm", placeholder="Confirm password", class="m-2 form-control")
+      if error
+        p(class="text-center m-2 text-primary") #{error}
+      button(type="submit", form="register", class="m-2 form-control btn btn-lg btn-primary") Signup
+      button(type="submit", form="login", class="m-2 form-control btn btn-lg btn-danger") Or login
+    

@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  div(class="d-flex flex-wrap justify-content-center" style="height: 100vh")
+    h1(class="text-center col-12 m-4") Hello #{username}
+    
+    form(id="logout", action="/logout", method="POST")
+    form(id="addBook", action="/addBook", method="GET")
+    form(id="books", action="/books", method="GET")
+    
+
+    div(class="w-25 mx-auto")
+      button(type="submit", form="logout", class="form-control btn btn-lg btn-primary m-2") Logout
+      button(type="submit", form="addBook", name="addBook", class="form-control btn btn-lg btn-danger m-2") Add new book
+      button(type="submit", form="books", name="books", class="form-control btn btn-lg btn-secondary m-2") Book list
+      
+        
+      
+      

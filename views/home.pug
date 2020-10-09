@@ -1,0 +1,13 @@
+extends layout
+
+block content
+  div(class="d-flex flex-wrap justify-content-center" style="height: 100vh")
+    h1(class="text-center col-12") Hello you can login or register
+
+    form(id="login", action="/login", method="GET")
+    form(id="register", action="/register", method="GET")
+    
+    div(class="")
+    div(class="w-50 d-flex")
+      button(type="submit", form="login", class="col-6 m-2 form-control btn btn-lg btn-primary") Login
+      button(type="submit", form="register", class="col-6 m-2 form-control btn btn-lg btn-primary") Signup

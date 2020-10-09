@@ -1,5 +1,5 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
 const db = require('../models/index');
 const { Op } = require("sequelize");
@@ -16,16 +16,17 @@ router.all('/', ash(async (req, res, next) => {
 
   if (user)
   {
-    res.render('userhome', {
-      username: user.dataValues.username
-    });
+    let sessionTokens = JSON.parse(user.dataValues.sessionTokens);
+
+    delete sessionTokens[req.session.id];
+
+    user.sessionTokens = JSON.stringify(sessionTokens);
+
+    await user.save();
   }
-  else
-  {
-    res.render('home', {
-      title: 'Home'
-    });
-  }
+
+  res.redirect('/');
 }));
+
 
 module.exports = router;
