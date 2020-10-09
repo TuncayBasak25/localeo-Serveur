@@ -35,6 +35,11 @@ var server = http.createServer(app);
      email: 'tuncay.basak@outlook.com',
      password: '14531453'
    });
+   db.User.create({
+     username: 'sergio',
+     email: 'sergio@outlook.com',
+     password: '14531453'
+   });
    server.listen(port, () => {
      debug('Express server listening on port ' + server.address().port);
    });
