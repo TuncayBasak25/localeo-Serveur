@@ -28,4 +28,22 @@ router.all('/', ash(async (req, res, next) => {
   }
 }));
 
+router.all('/addAvis', ash(async (req, res, next) => {
+  const user = await db.User.findOne({
+    where: {
+      username: 'tuncay'
+    }
+  });
+
+  const avis = await db.Avis.create();
+
+  await avis.setPoster(user);
+
+  console.log(await user.getPostedAvis());
+
+  res.redirect('/');
+}));
+
+
+
 module.exports = router;

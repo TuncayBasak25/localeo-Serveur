@@ -11,6 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+
+      ArchivedArticle.belongsTo(models.User);
     }
   };
   ArchivedArticle.init({

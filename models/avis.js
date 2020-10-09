@@ -11,6 +11,13 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Avis.belongsTo(models.User, {
+        as: "Poster"
+      });
+
+      Avis.belongsTo(models.User, {
+        as: "Destinater"
+      });
     }
   };
   Avis.init({
