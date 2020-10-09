@@ -29,14 +29,14 @@ var server = http.createServer(app);
 
  models.sequelize.sync({ force: true })
  .then( () => {
+   server.listen(port, () => {
+     debug('Express server listening on port ' + server.address().port);
+   });
    const db = require('../models/index');
    db.User.create({
      username: 'tuncay',
      email: 'tuncay.basak@outlook.com',
      password: '14531453'
-   });
-   server.listen(port, () => {
-     debug('Express server listening on port ' + server.address().port);
    });
 
    server.on('error', onError);
