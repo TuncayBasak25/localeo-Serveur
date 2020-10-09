@@ -4,16 +4,12 @@ block content
   div(class="d-flex flex-wrap justify-content-center" style="height: 100vh")
     h1(class="text-center col-12 m-4") Hello #{username}
     
-    form(id="logout", action="/logout", method="POST")
-    form(id="addBook", action="/addBook", method="GET")
-    form(id="books", action="/books", method="GET")
-    
-
+    if avatar
+      img(src="data:image/jpeg;base64," + avatar)
+        
     div(class="w-25 mx-auto")
-      button(type="submit", form="logout", class="form-control btn btn-lg btn-primary m-2") Logout
-      button(type="submit", form="addBook", name="addBook", class="form-control btn btn-lg btn-danger m-2") Add new book
-      button(type="submit", form="books", name="books", class="form-control btn btn-lg btn-secondary m-2") Book list
-      a(class="form-control btn btn-secondary btn-lg m-2" href="/addAvis") Add avis
+      a(class="form-control btn btn-primary btn-lg m-2" href="/addArticle") Add new article
+      a(class="form-control btn btn-danger btn-lg m-2" href="/logout") Logout
       
         
       

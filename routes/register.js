@@ -37,7 +37,7 @@ router.get('/', (req, res, next) => {
 });
 
 router.post('/', ash(async (req, res, next) => {
-  const user = {
+  let user = {
     username: req.body.username,
     email: req.body.email,
     password: req.body.password,
@@ -48,7 +48,7 @@ router.post('/', ash(async (req, res, next) => {
 
   if (validateUserSchema.error)
   {
-    res.render('register', { error: valid.error.details[0].message, body: req.body });
+    res.render('register', { error: validateUserSchema.error.details[0].message, body: req.body });
     return;
   }
 
@@ -70,7 +70,13 @@ router.post('/', ash(async (req, res, next) => {
 
   delete user.passwordConfirm;
 
-  await db.User.create(user);
+  user = await db.User.create(user);
+
+  if (req.files.avatar.data)
+  {
+    let avatar = await db.Avatar.create({ data: req.files.avatar.data});
+    await user.setAvatar(avatar);
+  }
 
   res.redirect('/');
 }));

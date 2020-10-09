@@ -8,6 +8,7 @@ var indexRouter = require('./routes/index');
 var registerRouter = require('./routes/register');
 var loginRouter = require('./routes/login');
 var logoutRouter = require('./routes/logout');
+var addArticleRouter = require('./routes/addArticle');
 
 var app = express();
 
@@ -43,6 +44,11 @@ app.use(session({
 }))
 //////////
 
+const fileUpload = require('express-fileUpload');
+app.use(fileUpload({
+  limits: { fileSize: 50 * 1024 * 1024 },
+}));
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -57,6 +63,7 @@ app.use('/', indexRouter);
 app.use('/register', registerRouter);
 app.use('/login', loginRouter);
 app.use('/logout', logoutRouter);
+app.use('/addArticle', addArticleRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

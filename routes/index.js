@@ -16,8 +16,13 @@ router.all('/', ash(async (req, res, next) => {
 
   if (user)
   {
+    let avatar = await user.getAvatar();
+
+    if (avatar) avatar = avatar.data.toString('base64');
+
     res.render('userhome', {
-      username: user.dataValues.username
+      username: user.dataValues.username,
+      avatar: avatar
     });
   }
   else
@@ -26,22 +31,6 @@ router.all('/', ash(async (req, res, next) => {
       title: 'Home'
     });
   }
-}));
-
-router.all('/addAvis', ash(async (req, res, next) => {
-  const user = await db.User.findOne({
-    where: {
-      username: 'tuncay'
-    }
-  });
-
-  const avis = await db.Avis.create();
-
-  await avis.setPoster(user);
-
-  console.log(await user.getPostedAvis());
-
-  res.redirect('/');
 }));
 
 

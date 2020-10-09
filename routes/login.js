@@ -44,7 +44,7 @@ router.post('/', ash(async (req, res, next) => {
 
   if (validateUserSchema.error)
   {
-    res.render('login', { error: valid.error.details[0].message, body: req.body });
+    res.render('login', { error: validateUserSchema.error.details[0].message, body: req.body });
     return;
   }
 
