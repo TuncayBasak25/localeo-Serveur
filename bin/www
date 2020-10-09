@@ -32,12 +32,6 @@ var server = http.createServer(app);
    server.listen(port, () => {
      debug('Express server listening on port ' + server.address().port);
    });
-   const db = require('../models/index');
-   db.User.create({
-     username: 'tuncay',
-     email: 'tuncay.basak@outlook.com',
-     password: '14531453'
-   });
 
    server.on('error', onError);
    server.on('listening', onListening);
