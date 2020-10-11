@@ -4,18 +4,13 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var registerRouter = require('./routes/register');
-var loginRouter = require('./routes/login');
-var logoutRouter = require('./routes/logout');
-var addArticleRouter = require('./routes/addArticle');
-var postAvisRouter = require('./routes/postAvis');
 
 var app = express();
 
 app.use(express.static(path.join(__dirname, 'public')));
 //SESSIONS
 var session = require('express-session');
+
 
 app.set('trust proxy', 1) // trust first proxy
 app.use(session({
@@ -60,12 +55,22 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/register', registerRouter);
-app.use('/login', loginRouter);
-app.use('/logout', logoutRouter);
-app.use('/addArticle', addArticleRouter);
-app.use('/postAvis', postAvisRouter);
+
+//ROUTEUR
+app.use('/', require('./routes/index'));
+app.use('/register', require('./routes/register'));
+app.use('/login', require('./routes/login'));
+app.use('/logout', require('./routes/logout'));
+app.use('/addArticle', require('./routes/addArticle'));
+app.use('/postAvis', require('./routes/postAvis'));
+
+app.use('/API/register', require('./routes/API/register'));
+app.use('/API/login', require('./routes/API/login'));
+app.use('/API/logout', require('./routes/API/logout'));
+app.use('/API/search', require('./routes/API/search'));
+app.use('/API/newArticle', require('./routes/API/newArticle'));
+//////
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

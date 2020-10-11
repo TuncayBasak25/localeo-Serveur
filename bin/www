@@ -26,20 +26,110 @@ var server = http.createServer(app);
  */
 
  var models = require('../models');
+ var fs = require('fs');
 
  models.sequelize.sync({ force: true })
- .then( () => {
+ .then( async () => {
    const db = require('../models/index');
-   db.User.create({
+   const tuncay = await db.User.create({
      username: 'tuncay',
      email: 'tuncay.basak@outlook.com',
-     password: '14531453'
+     password: '14531453',
+     role: 'admin'
    });
-   db.User.create({
-     username: 'sergio',
-     email: 'sergio@outlook.com',
-     password: '14531453'
+   await tuncay.createUserInfo({
+     firstname: 'Tuncay',
+     lastname: 'Basak',
+     phone: '0204081499',
+     adress: 'my adress',
+     geolocation: JSON.stringify({
+       lattitude: 46.987179,
+       longitude: 3.161600
+     })
    });
+   let avatar = await fs.readFileSync('./src/avatar/tuncay.jpg');
+   await tuncay.createAvatar({ data: avatar });
+
+   let articleImages = [
+     await fs.readFileSync('./src/article/destroyer.jpg'),
+     await fs.readFileSync('./src/article/galaxyA40.jpg'),
+     await fs.readFileSync('./src/article/usbkey.jpg'),
+     await fs.readFileSync('./src/article/watch.jpg')
+   ];
+
+   let articleTitle = [
+     'Destroyer class XQR3580',
+     'Galaxy A40 comme neuf',
+     'Clé usb fonctionnelle 16Gb',
+     'Montre couleur bronze'
+   ];
+
+   let articleDescription = [
+     'Destroyer en bon état, année 3483',
+     'Téléphone comme neuf.',
+     'Usb fonctionnelle.',
+     'Montre comme neuf.'
+   ];
+
+   let articlePrice = [
+     950,
+     125,
+     5,
+     230
+   ];
+
+   let articleGeolocation = [
+     JSON.stringify({
+       lattitude: 46.787179,
+       longitude: 3.461600
+     }),
+     JSON.stringify({
+       lattitude: 46.687179,
+       longitude: 3.761600
+     }),
+     JSON.stringify({
+       lattitude: 46.487179,
+       longitude: 3.361600
+     }),
+     JSON.stringify({
+       lattitude: 46.987179,
+       longitude: 3.161600
+     })
+   ];
+
+   let articleCategories = [
+     JSON.stringify({
+       spaceship: true
+     }),
+     JSON.stringify({
+       smartphone: true,
+       technologie: true
+     }),
+     JSON.stringify({
+       technologie: true
+     }),
+     JSON.stringify({
+       accessoire: true
+     }),
+   ];
+
+   for (let i=0; i<articlePrice.length; i++)
+   {
+     let image = { data: articleImages[i] };
+     let article = {
+       title: articleTitle[i],
+       description: articleDescription[i],
+       price: articlePrice[i],
+       geolocation: articleGeolocation[i],
+       categories: articleCategories[i]
+     }
+
+     article = await tuncay.createArticle(article);
+     //article = await db.Article.create(article);
+
+     await article.createImage(image);
+   }
+
    server.listen(port, () => {
      debug('Express server listening on port ' + server.address().port);
    });
