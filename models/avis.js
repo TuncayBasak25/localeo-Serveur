@@ -12,17 +12,19 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Avis.belongsTo(models.User, {
-        as: "Poster"
+        as: "poster",
+        foreignKey: { field: 'posterId' }
       });
 
       Avis.belongsTo(models.User, {
-        as: "Destinater"
+        as: "destinater",
+        foreignKey: { field: 'destinaterId' }
       });
     }
   };
   Avis.init({
     title: DataTypes.STRING,
-    text: DataTypes.STRING,
+    message: DataTypes.STRING,
     stars: DataTypes.INTEGER
   }, {
     sequelize,

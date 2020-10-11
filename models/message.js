@@ -13,11 +13,13 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
 
       Message.belongsTo(models.User, {
-        as: "poster"
+        as: "source",
+        foreignKey: { field: 'sourceId' }
       });
 
       Message.belongsTo(models.User, {
-        as: "destinater"
+        as: "target",
+        foreignKey: { field: 'targetId' }
       });
     }
   };

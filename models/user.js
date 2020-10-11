@@ -15,60 +15,24 @@ module.exports = (sequelize, DataTypes) => {
       User.hasOne(models.Avatar);
 
       User.hasMany(models.Avis, {
-        as: "postedAvis"
+        as: 'postedAvis',
+        foreignKey: { field: 'posterId' }
       });
-
-      User.getPostedAvis = () => {
-        return models.Avis.findAll(
-          {
-            where: {
-              posterId: this.id
-            }
-          }
-        );
-      }
 
       User.hasMany(models.Avis, {
-        as: "destinatedAvis"
+        as: "destinatedAvis",
+        foreignKey: { field: 'destinaterId' }
       });
-
-      User.getDestinatedAvis = () => {
-        return models.Avis.findAll(
-          {
-            where: {
-              destinaterId: this.id
-            }
-          }
-        );
-      }
 
       User.hasMany(models.Message, {
-        as: "postedMessage"
+        as: "sentMessage",
+        foreignKey: { field: 'sourceId' }
       });
-
-      User.getPostedMessage = () => {
-        return models.Message.findAll(
-          {
-            where: {
-              posterId: this.id
-            }
-          }
-        );
-      }
 
       User.hasMany(models.Message, {
-        as: "recievedMessage"
+        as: "recievedMessage",
+        foreignKey: { field: 'targetId' }
       });
-
-      User.getDestinatedMessage = () => {
-        return models.Message.findAll(
-          {
-            where: {
-              destinaterId: this.id
-            }
-          }
-        );
-      }
 
       User.hasMany(models.Article);
 
@@ -76,7 +40,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   User.init({
-    username: DataTypes.STRING,
+    username: {
+      type: DataTypes.STRING,
+      unique: true
+    },
     email: DataTypes.STRING,
     password: DataTypes.STRING,
     sessionTokens: DataTypes.STRING
