@@ -43,12 +43,9 @@ router.post('/', ash(async (req, res, next) => {
   let images = [];
   if (req.files)
   {
-    let { image1, image2, image3 } = req.files;
+    let { image1, image2, image3 } = req.body;
     images = [image1, image2, image3];
   }
-
-  console.log(req.files);
-  console.log(req.body);
 
   const validateArticleSchema = articleSchema.validate(article);
 
@@ -66,7 +63,7 @@ router.post('/', ash(async (req, res, next) => {
     let image = images[i];
     if (image)
     {
-      image = await db.Image.create({ data: image.data });
+      image = await db.Image.create({ data: image });
       await article.addImage(image);
     }
   }
