@@ -48,6 +48,7 @@ router.post('/', ash(async (req, res, next) => {
   }
 
   console.log(req.files);
+  console.log(req.body);
 
   const validateArticleSchema = articleSchema.validate(article);
 
