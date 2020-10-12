@@ -47,6 +47,8 @@ router.post('/', ash(async (req, res, next) => {
     images = [image1, image2, image3];
   }
 
+  console.log(images);
+
   const validateArticleSchema = articleSchema.validate(article);
 
   if (validateArticleSchema.error)
