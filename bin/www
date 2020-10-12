@@ -37,6 +37,14 @@ var server = http.createServer(app);
      password: '14531453',
      role: 'admin'
    });
+   
+   const olivier = await db.User.create({
+     username: 'olivier',
+     email: 'olivier@outlook.com',
+     password: 'benlaura',
+     role: 'admin'
+   });
+
    await tuncay.createUserInfo({
      firstname: 'Tuncay',
      lastname: 'Basak',
@@ -47,6 +55,7 @@ var server = http.createServer(app);
        longitude: 3.161600
      })
    });
+
    let avatar = await fs.readFileSync('./src/avatar/tuncay.jpg');
    await tuncay.createAvatar({ data: avatar });
 

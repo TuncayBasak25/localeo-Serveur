@@ -40,7 +40,10 @@ router.get('/', ash(async (req, res, next) => {
 
   for (let i=0; i<articles.length; i++)
   {
-    articles[i].Images[0].data = articles[i].Images[0].data.toString('base64');
+    if (articles[i].Images)
+    {
+      for (let j=0; j<articles.Images.length; j++) articles[i].Images[i].data = articles[i].Images[j].data.toString('base64');
+    }
   }
 
   res.send(articles);
