@@ -31,6 +31,7 @@ router.post('/', ash(async (req, res, next) => {
     res.send({ error: "You are not connected." });
     return;
   }
+  console.log('salut');
 
   console.log(body.image1);
 
