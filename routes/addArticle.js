@@ -33,6 +33,7 @@ router.all('/', ash(async (req, res, next) => {
 }));
 
 router.get('/', (req, res, next) => {
+
   res.render('addArticle');
 });
 

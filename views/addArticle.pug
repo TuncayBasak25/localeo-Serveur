@@ -1,7 +1,9 @@
 extends layout
 
+
+
 block content
-  form(action="/addArticle" method="POST" enctype="multipart/form-data" class="d-flex justify-content-center align-items-center" style="height: 100vh")
+  form(action="/addArticle" method="POST" enctype="multipart/form-data" class="d-flex justify-content-center align-items-center" style="height: 100vh" onsubmit="formSubmit(this)")
     div(class="w-25")
       input(type="text" name="title" placeholder="Title" value=body ? body.title : '' class="m-2 form-control")
       textarea(name="description" placeholder="Description..." value=body ? body.description : '' class="m-2 md-textarea form-control")
@@ -19,4 +21,34 @@ block content
       if error
         p(class="text-center m-2 text-primary") #{error}
       button(type="submit" class="m-2 form-control btn btn-lg btn-primary") Post article
-    
+
+      //- script.
+      //-   const formSubmit = async form =>  {
+      //-     window.event.preventDefault();
+      //- 
+      //-     let data = new FormData();
+      //- 
+      //-     for (let input of form)
+      //-     {console.log(input);
+      //-       if (input.name !== 'image1') data.append(input.name, input.value);
+      //-       else data.append('image1', { uri: input.value, type: 'image/jpeg' });
+      //-     }
+      //- 
+      //-     console.log(data);
+      //- 
+      //-     res = await fetch('http://localhost:3000/API/newArticle', {
+      //-       method: 'post',
+      //-       headers: { 'Content-Type': 'multipart/form-data', Accept: 'application/json' },
+      //-       body: data
+      //-     });
+      //-     let json = await res.text();
+      //- 
+      //-     if (json.charAt(0) === '<') console.log(json);
+      //-     else
+      //-     {
+      //-       json = JSON.parse(json);
+      //-       console.log(json);
+      //-     }
+      //- 
+      //-     return false;
+      //-   }

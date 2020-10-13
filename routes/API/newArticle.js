@@ -42,11 +42,12 @@ router.post('/', ash(async (req, res, next) => {
   }
 
   let images = [];
-  if (req.files)
+  if (req.body)
   {
-    let { image1, image2, image3 } = req.files;
+    let { image1, image2, image3 } = req.body;
     images = [image1, image2, image3];
   }
+
 
   const validateArticleSchema = articleSchema.validate(article);
 
