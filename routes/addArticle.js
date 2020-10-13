@@ -51,6 +51,10 @@ router.post('/', ash(async (req, res, next) => {
   {
     let { image1, image2, image3 } = req.files;
     images = [image1, image2, image3];
+    // let test = image1.data.toString('base64');
+    // console.log(test);
+    // let kest = new Buffer(test);
+    // console.log(kest);
   }
 
   const validateArticleSchema = articleSchema.validate(article);
