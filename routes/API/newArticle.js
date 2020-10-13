@@ -46,7 +46,6 @@ router.post('/', ash(async (req, res, next) => {
   {
     let { image1, image2, image3 } = req.body;
     images = [image1, image2, image3];
-    console.log(req.body.image1);
   }
 
 
@@ -71,7 +70,7 @@ router.post('/', ash(async (req, res, next) => {
     }
   }
 
-  res.send({});
+  res.send({ image: req.body.image1 });
 }));
 
 module.exports = router;
