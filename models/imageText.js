@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   ImageText.init({
-    string: DataTypes.TEXT({ length: 'long' })
+    data: DataTypes.TEXT({ length: 'long' })
   }, {
     sequelize,
     modelName: 'ImageText',
