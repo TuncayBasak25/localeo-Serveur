@@ -33,8 +33,6 @@ router.post('/', ash(async (req, res, next) => {
   }
   console.log('salut');
 
-  console.log(body.image1);
-
   let article = {
     title: req.body.title,
     description: req.body.description,
