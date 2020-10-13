@@ -42,9 +42,9 @@ router.post('/', ash(async (req, res, next) => {
   }
 
   let images = [];
-  if (req.body)
+  if (req.files)
   {
-    let { image1, image2, image3 } = req.body;
+    let { image1, image2, image3 } = req.files;
     images = [image1, image2, image3];
   }
 
