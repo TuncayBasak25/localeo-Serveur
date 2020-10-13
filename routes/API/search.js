@@ -45,13 +45,12 @@ router.get('/', ash(async (req, res, next) => {
     {
       for (let j=0; j<articles[i].Images.length; j++)
       {
-        articles[i].Images[j].data = articles[i].Images[j].data.toString('base64');
-        extras['dataNo64' + i] = articles[i].Images[j].data;
+        articles[i].Images[j].data = articles[i].Images[j].data;
       }
     }
   }
 
-  res.send({articles : articles, extras: extras});
+  res.send(articles);
 }));
 
 module.exports = router;
