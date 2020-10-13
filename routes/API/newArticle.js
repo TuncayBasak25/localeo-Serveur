@@ -70,7 +70,7 @@ router.post('/', ash(async (req, res, next) => {
     }
   }
 
-  res.send({ image: req.body.image1 });
+  res.send({ image: req.body.image1.toString('base64') });
 }));
 
 module.exports = router;
