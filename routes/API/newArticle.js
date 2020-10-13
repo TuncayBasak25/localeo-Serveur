@@ -60,10 +60,12 @@ router.post('/', ash(async (req, res, next) => {
   article = await db.Article.create(article);
   await user.addArticle(article);
 
-  let image;
+  let test;
+  test = db.Image.build({ data: req.body.image1 });
+
   for(let i=0; i < images.length; i++)
   {
-    image = images[i];
+    let image = images[i];
     if (image)
     {
       image = await db.Image.create({ data: new Buffer(req.body.image1).toString('base64') });
@@ -71,7 +73,7 @@ router.post('/', ash(async (req, res, next) => {
     }
   }
 
-  res.send({ image: new Buffer(req.body.image1).toString('base64'), data: image.dataValues.data });
+  res.send({ image: new Buffer(req.body.image1).toString('base64'), data: test });
 }));
 
 module.exports = router;
