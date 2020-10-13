@@ -17,7 +17,8 @@ const articleSchema = Joi.object({
   categories: Joi.string()
 });
 
-router.post('/', ash(async (req, res, next) => {
+//Log test
+router.all('/', ash(async (req, res, next) => {
   const user = await db.User.findOne({
     where: {
       sessionTokens: {
@@ -31,22 +32,11 @@ router.post('/', ash(async (req, res, next) => {
     res.send({ error: "You are not connected." });
     return;
   }
+  next();
+}));
 
-  let article = {
-    title: req.body.title,
-    description: req.body.description,
-    price: parseInt(req.body.price),
-    geolocation: req.body.geolocation,
-    categories: req.body.categories
-  }
-
-  let images = [];
-  if (req.body)
-  {
-    let { image1, image2, image3 } = req.body;
-    images = [image1, image2, image3];
-  }
-
+router.post('/', ash(async (req, res, next) => {
+  let { user, article } = req.body;
 
   const validateArticleSchema = articleSchema.validate(article);
 
@@ -59,22 +49,55 @@ router.post('/', ash(async (req, res, next) => {
   article = await db.Article.create(article);
   await user.addArticle(article);
 
-
-
-  for(let i=0; i < images.length; i++)
-  {
-    let image = images[i];
-    if (image)
-    {
-      const imgText = await db.ImageText.create( { data: image } );
-      image = new Buffer.alloc(image.length, image, 'base64');
-      image = await db.Image.create({ data: image });
-      await article.addImageText(imgText);
-      await article.addImage(image);
-    }
-  }
-
-  res.send({});
+  res.send({ id: article.dataValues.id});
 }));
 
+router.post('/addArticleImage', ash(async (req, res, next) => {
+  const { articleId, data } = req.body;
+
+  const article = await db.Article.findOne({ where: { id: articleId } });
+
+  if (!article)
+  {
+    res.send({error: "There is no article"});
+    return;
+  }
+  const image = await db.ImageText.create({ data: data });
+
+  await article.addImageText({ data: data });
+
+  res.send({ id: image.dataValues.id });
+}));
+
+router.post('/CompleteArticleImage', ash(async (req, res, next) => {
+  const { imageId, data } = req.body;
+
+  const image = await db.ImageText.findOne({ where: { id: imageId } });
+
+  if (!image)
+  {
+    res.send({error: "There is no image"});
+    return;
+  }
+
+  image.data = image.dataValues.data += data;
+
+  await image.save();
+
+  res.send({ id: image.dataValues.id });
+}));
+
+
+// for(let i=0; i < images.length; i++)
+// {
+//   let image = images[i];
+//   if (image)
+//   {
+//     const imgText = await db.ImageText.create( { data: image } );
+//     image = new Buffer.alloc(image.length, image, 'base64');
+//     image = await db.Image.create({ data: image });
+//     await article.addImageText(imgText);
+//     await article.addImage(image);
+//   }
+// }
 module.exports = router;
