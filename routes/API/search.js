@@ -51,7 +51,7 @@ router.get('/', ash(async (req, res, next) => {
     }
   }
 
-  res.send({articles : article, extras: extras});
+  res.send({articles : articles, extras: extras});
 }));
 
 module.exports = router;
