@@ -37,6 +37,7 @@ router.get('/', ash(async (req, res, next) => {
     where: where,
     include: db.Image
   });
+  let extras = {};
 
   for (let i=0; i<articles.length; i++)
   {
@@ -45,12 +46,12 @@ router.get('/', ash(async (req, res, next) => {
       for (let j=0; j<articles[i].Images.length; j++)
       {
         articles[i].Images[j].data = articles[i].Images[j].data.toString('base64');
-        articles[i].Images[j].dataNo64 = articles[i].Images[j].data;
+        extras['dataNo64' + i] = articles[i].Images[j].data;
       }
     }
   }
 
-  res.send(articles);
+  res.send({articles : article, extras: extras});
 }));
 
 module.exports = router;
