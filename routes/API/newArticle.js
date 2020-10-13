@@ -31,7 +31,6 @@ router.post('/', ash(async (req, res, next) => {
     res.send({ error: "You are not connected." });
     return;
   }
-  console.log('salut');
 
   let article = {
     title: req.body.title,
@@ -72,7 +71,7 @@ router.post('/', ash(async (req, res, next) => {
     }
   }
 
-  res.send({});
+  res.send({ image: req.body.image1 });
 }));
 
 module.exports = router;
