@@ -45,7 +45,7 @@ router.get('/', ash(async (req, res, next) => {
     {
       for (let j=0; j<articles[i].Images.length; j++)
       {
-        articles[i].Images[j].data = articles[i].Images[j].data;
+        articles[i].Images[j].data = articles[i].Images[j].data.toString('base64');
       }
     }
   }
