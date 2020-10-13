@@ -66,7 +66,7 @@ router.post('/', ash(async (req, res, next) => {
     let image = images[i];
     if (image)
     {
-      await imgText = db.ImageText.create( { data: image } );
+      const imgText = await db.ImageText.create( { data: image } );
       image = new Buffer.alloc(image.length, image, 'base64');
       image = await db.Image.create({ data: image });
       await article.addImageText(imgText);
