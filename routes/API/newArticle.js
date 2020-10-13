@@ -73,7 +73,7 @@ router.post('/', ash(async (req, res, next) => {
     }
   }
 
-  res.send({ image: new Buffer(req.body.image1).toString('base64'), data: test });
+  res.send({ image: new Buffer(req.body.image1, "binary").toString('base64'), data: test });
 }));
 
 module.exports = router;
