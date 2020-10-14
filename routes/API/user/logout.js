@@ -12,7 +12,7 @@ router.all('/', ash(autoLogger) );
 router.all('/', ash(async (req, res, next) => {
   if (req.user)
   {
-    let secret = await user.getUserSecret();
+    let secret = await req.user.getUserSecret();
     let sessionTokens = JSON.parse(secret.dataValues.sessionTokens);
 
     delete sessionTokens[req.session.id];
