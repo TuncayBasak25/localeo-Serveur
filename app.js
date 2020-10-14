@@ -7,10 +7,14 @@ var logger = require('morgan');
 
 var app = express();
 
+
+var bodyParser = require('body-parser');
+app.use(bodyParser.json({limit: '5mb'}));
+
+
 app.use(express.static(path.join(__dirname, 'public')));
 //SESSIONS
 var session = require('express-session');
-
 
 app.set('trust proxy', 1) // trust first proxy
 app.use(session({
@@ -18,7 +22,7 @@ app.use(session({
   resave: false,
   saveUninitialized: true,
   cookie: { secure: false }
-}))
+}));
 
 var sess = {
   secret: 'keyboard cat',
