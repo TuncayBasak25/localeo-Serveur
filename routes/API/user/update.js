@@ -14,7 +14,7 @@ router.all('/', ash(autoLogger) );
 router.all('/', ash(async (req, res, next) => {
   if (!req.user)
   {
-    res.send({ "You are not connected." });
+    res.send({ error: "You are not connected." });
     return;
   }
 
@@ -61,7 +61,7 @@ router.post('/', ash(async (req, res, next) => {
     res.send({ error: val.error.details[0].message });
     return;
   }
-  
+
   val = newAvatarSchema.validate(newAvatar);
   if (val.error)
   {
