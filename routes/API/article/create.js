@@ -72,7 +72,7 @@ router.post('/', ash(async (req, res, next) => {
     }
   }
 
-  res.send({});
+  res.send({ article: article });
 }));
 
 
