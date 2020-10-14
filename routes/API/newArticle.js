@@ -32,6 +32,7 @@ router.all('/', ash(async (req, res, next) => {
     res.send({ error: "You are not connected." });
     return;
   }
+  req.body.user = user;
   next();
 }));
 
