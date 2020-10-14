@@ -36,8 +36,7 @@ router.get('/', ash(async (req, res, next) => {
   let articles = await db.Article.findAll({
     where: where,
     include: [
-      { model: db.Image },
-      { model: db.ImageText }
+      { model: db.Image }
     ]
   });
   let extras = {};
