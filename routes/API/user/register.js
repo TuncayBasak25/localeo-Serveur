@@ -41,7 +41,7 @@ router.post('/', ash(async (req, res, next) => {
     return;
   }
 
-  let val = avatarSchema.validate(avatarData);
+  val = avatarSchema.validate(avatarData);
   if (val.error)
   {
     res.send({ error: val.error.details[0].message });
