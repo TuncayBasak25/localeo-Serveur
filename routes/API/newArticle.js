@@ -37,7 +37,7 @@ router.all('/', ash(async (req, res, next) => {
 }));
 
 router.post('/', ash(async (req, res, next) => {
-  let { user, article, image1, image2, image3 } = req.body;
+  let { user, article, images } = req.body;
 
   const validateArticleSchema = articleSchema.validate(article);
 
@@ -50,7 +50,7 @@ router.post('/', ash(async (req, res, next) => {
   article = await db.Article.create(article);
   await user.addArticle(article);
 
-  for(let image of [image1, image2, image3])
+  for(let image of images)
   {
     if (image)
     {
