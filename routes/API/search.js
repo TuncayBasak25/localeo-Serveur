@@ -27,7 +27,7 @@ router.get('/', ash(async (req, res, next) => {
     {
       where[Op.or].push({
         title: {
-          [Op.substring]: word
+          [Op.iLike]: '%' + word + '%'
         }
       });
     }

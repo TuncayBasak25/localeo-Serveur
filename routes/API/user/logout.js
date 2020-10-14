@@ -7,24 +7,19 @@ const db = require('../../../models/index');
 const { Op } = require("sequelize");
 const ash = require('express-async-handler');
 
+const autoLogger = require('../../../middleware/autoLogger');
+router.all('/', ash(autoLogger) );
 router.all('/', ash(async (req, res, next) => {
-  const user = await db.User.findOne({
-    where: {
-      sessionTokens: {
-        [Op.substring]: req.session.id
-      }
-    }
-  });
-
-  if (user)
+  if (req.user)
   {
-    let sessionTokens = JSON.parse(user.dataValues.sessionTokens);
+    let secret = await user.getUserSecret();
+    let sessionTokens = JSON.parse(secret.dataValues.sessionTokens);
 
     delete sessionTokens[req.session.id];
 
-    user.sessionTokens = JSON.stringify(sessionTokens);
+    secret.sessionTokens = JSON.stringify(sessionTokens);
 
-    await user.save();
+    await secret.save();
   }
 
   res.send({});

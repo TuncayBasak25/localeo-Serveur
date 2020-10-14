@@ -27,7 +27,6 @@ module.exports = (sequelize, DataTypes) => {
     lattitude: DataTypes.FLOAT,
     longitude: DataTypes.FLOAT,
     sousCategory: DataTypes.STRING
-
   }, {
     sequelize,
     modelName: 'Article',

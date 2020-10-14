@@ -16,21 +16,15 @@ const userSchema = Joi.object({
   passwordConfirm: Joi.string().equal(Joi.ref('password')).required()
 });
 
-router.all('/', ash(async (req, res, next) => {
-  const user = await db.User.findOne({
-    where: {
-      sessionTokens: {
-        [Op.substring]: req.session.id
-      }
-    }
-  });
 
-  if (user)
+const autoLogger = require('../../../middleware/autoLogger');
+router.all('/', ash(autoLogger) );
+router.all('/', ash(async (req, res, next) => {
+  if (req.user)
   {
     res.send({ error: "You are already connected" });
     return;
   }
-
   next();
 }));
 
@@ -70,9 +64,15 @@ router.post('/', ash(async (req, res, next) => {
     return;
   }
 
+  const secret = {
+    password: user.password,
+    sessionTokens: '{}'
+  }
   delete user.passwordConfirm;
+  delete user.password;
 
   user = await db.User.create(user);
+  await user.createUserSecret(secret)
 
   if (data)
   {

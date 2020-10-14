@@ -18,26 +18,20 @@ const articleSchema = Joi.object({
 });
 
 //Log test
+const autoLogger = require('../../middleware/autoLogger');
+router.all('/', ash(autoLogger) );
 router.all('/', ash(async (req, res, next) => {
-  const user = await db.User.findOne({
-    where: {
-      sessionTokens: {
-        [Op.substring]: req.session.id
-      }
-    }
-  });
-
-  if (!user)
+  if (!req.user)
   {
-    res.send({ error: "You are not connected." });
+    res.send({ error: "You are not connected!" })
     return;
   }
-  req.body.user = user;
   next();
 }));
 
 router.post('/', ash(async (req, res, next) => {
-  let { user, article, images } = req.body;
+  let { user } = req;
+  let { article, images } = req.body;
 
   const validateArticleSchema = articleSchema.validate(article);
 

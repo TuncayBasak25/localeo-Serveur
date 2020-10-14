@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      User.hasOne(models.UserInfo);
+      User.hasOne(models.UserSecret);
       User.hasOne(models.Avatar);
 
       User.hasMany(models.Avis, {
@@ -55,11 +55,13 @@ module.exports = (sequelize, DataTypes) => {
       unique: true
     },
     email: DataTypes.STRING,
-    password: DataTypes.STRING,
-    sessionTokens: {
-      type: DataTypes.STRING(60000),
-      defaultValue: '{}'
-    },
+
+    firstname: DataTypes.STRING,
+    lastname: DataTypes.STRING,
+    phone: DataTypes.STRING,
+    adress: DataTypes.STRING,
+    geolocation: DataTypes.STRING,
+
     role: DataTypes.STRING
   }, {
     sequelize,

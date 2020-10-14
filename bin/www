@@ -34,9 +34,10 @@ var server = http.createServer(app);
    const tuncay = await db.User.create({
      username: 'tuncay',
      email: 'tuncay.basak@outlook.com',
-     password: '14531453',
      role: 'admin'
    });
+
+   tuncay.createUserSecret({ password: '14531453', sessionTokens: '{}' });
 
    const olivier = await db.User.create({
      username: 'olivier',
@@ -45,16 +46,8 @@ var server = http.createServer(app);
      role: 'admin'
    });
 
-   await tuncay.createUserInfo({
-     firstname: 'Tuncay',
-     lastname: 'Basak',
-     phone: '0204081499',
-     adress: 'my adress',
-     geolocation: JSON.stringify({
-       lattitude: 46.987179,
-       longitude: 3.161600
-     })
-   });
+   olivier.createUserSecret({ password: 'benlaura', sessionTokens: '{}' });
+
 
    let avatar = await fs.readFileSync('./src/avatar/tuncay.jpg');
    await tuncay.createAvatar({ data: avatar });

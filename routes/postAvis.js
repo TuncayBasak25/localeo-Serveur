@@ -13,22 +13,14 @@ const avisSchema = Joi.object({
   stars: Joi.number().integer().min(1).max(5).required()
 });
 
+const autoLogger = require('../middleware/autoLogger');
+router.all('/', ash(autoLogger) );
 router.all('/', ash(async (req, res, next) => {
-  const user = await db.User.findOne({
-    where: {
-      sessionTokens: {
-        [Op.substring]: req.session.id
-      }
-    }
-  });
-
-  if (!user)
+  if (req.user)
   {
     res.redirect('/');
     return;
   }
-
-  req.user = user;
   next();
 }));
 

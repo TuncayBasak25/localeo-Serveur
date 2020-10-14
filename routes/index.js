@@ -5,24 +5,19 @@ const db = require('../models/index');
 const { Op } = require("sequelize");
 const ash = require('express-async-handler');
 
+const autoLogger = require('../middleware/autoLogger');
+
+router.all('/', ash(autoLogger) );
+
 router.all('/', ash(async (req, res, next) => {
-  const user = await db.User.findOne({
-    where: {
-      sessionTokens: {
-        [Op.substring]: req.session.id
-      }
-    }
-  });
+  const { user } = req;
 
   if (user)
   {
     let avatar = await user.getAvatar();
-
-    if (avatar) avatar = avatar.data.toString('base64');
-
     res.render('userhome', {
       username: user.dataValues.username,
-      avatar: avatar
+      avatar: avatar.dataValues.data.toString('base64')
     });
   }
   else
@@ -32,7 +27,6 @@ router.all('/', ash(async (req, res, next) => {
     });
   }
 }));
-
 
 
 module.exports = router;

@@ -14,21 +14,14 @@ const userSchema = Joi.object({
   passwordConfirm: Joi.string().equal(Joi.ref('password')).required()
 });
 
+const autoLogger = require('../middleware/autoLogger');
+router.all('/', ash(autoLogger) );
 router.all('/', ash(async (req, res, next) => {
-  const user = await db.User.findOne({
-    where: {
-      sessionTokens: {
-        [Op.substring]: req.session.id
-      }
-    }
-  });
-
-  if (user)
+  if (req.user)
   {
     res.redirect('/');
     return;
   }
-
   next();
 }));
 
@@ -43,6 +36,10 @@ router.post('/', ash(async (req, res, next) => {
     password: req.body.password,
     passwordConfirm: req.body.passwordConfirm
   }
+
+  let data = null;
+  if (req.files && req.files.avatar) data = req.files.avatar.data;
+
 
   const validateUserSchema = userSchema.validate(user);
 
@@ -68,13 +65,19 @@ router.post('/', ash(async (req, res, next) => {
     return;
   }
 
+  const secret = {
+    password: user.password,
+    sessionTokens: '{}'
+  }
   delete user.passwordConfirm;
+  delete user.password;
 
   user = await db.User.create(user);
+  await user.createUserSecret(secret)
 
-  if (req.files.avatar.data)
+  if (data)
   {
-    let avatar = await db.Avatar.create({ data: req.files.avatar.data});
+    let avatar = await db.Avatar.create({ data: data});
     await user.setAvatar(avatar);
   }
 

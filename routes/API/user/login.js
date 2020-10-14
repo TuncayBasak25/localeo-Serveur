@@ -14,25 +14,16 @@ const userSchema = Joi.object({
   password: Joi.string().min(8).max(256).required()
 });
 
+const autoLogger = require('../../../middleware/autoLogger');
+router.all('/', ash(autoLogger) );
 router.all('/', ash(async (req, res, next) => {
-  const user = await db.User.findOne({
-    where: {
-      sessionTokens: {
-        [Op.substring]: req.session.id
-      }
-    },
-    include: [
-      { model: db.Avatar },
-      { model: db.UserInfo }
-    ]
-  });
-
-  if (user)
+  if (req.user)
   {
-    res.send({ user });
+    let avatar = await req.user.getAvatar();
+    req.user.Avatar = avatar;
+    res.send(user);
     return;
   }
-
   next();
 }));
 
@@ -55,8 +46,7 @@ router.post('/', ash(async (req, res, next) => {
       username: user.username
     },
     include: [
-      { model: db.Avatar },
-      { model: db.UserInfo }
+      { model: db.Avatar }
     ]
   });
 
@@ -66,21 +56,23 @@ router.post('/', ash(async (req, res, next) => {
     return;
   }
 
-  if (user.dataValues.password !== req.body.password)
+  let secret = await user.getUserSecret();
+
+  if (secret.dataValues.password !== req.body.password)
   {
     res.send( { error: "Password is wrong." });
     return;
   }
 
-  let sessionTokens = JSON.parse(user.dataValues.sessionTokens);
+  let sessionTokens = JSON.parse(secret.dataValues.sessionTokens);
 
   sessionTokens[req.session.id] = true;
 
-  user.sessionTokens = JSON.stringify(sessionTokens);
+  secret.sessionTokens = JSON.stringify(sessionTokens);
 
-  await user.save();
+  await secret.save();
 
-  res.send({ user });
+  res.send(user);
 }));
 
 module.exports = router;
