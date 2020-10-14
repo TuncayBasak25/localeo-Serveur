@@ -23,25 +23,26 @@ router.all('/', ash(async (req, res, next) => {
 
 router.get('/', ash(async (req, res, next) => {
   let { user } = req;
-  let { articleId } = req.query;
+  let { avisId } = req.query;
 
-  if (!articleId)
+  if (!avisId)
   {
-    res.send({ error: "There is no articleId" });
+    res.send({ error: "There is no avisId" });
     return;
   }
-  articleId = parseInt(articleId);
+  avisId = parseInt(avisId);
 
-  await db.Article.destroy({
+  await db.Avis.destroy({
     where: {
       [Op.and]: [
-        { id: articleId },
-        { UserId: user.dataValues.id }
+        { id: avisId },
+        { PosterId: user.dataValues.id }
       ]
     }
   });
 
   res.send( {} );
 }));
+
 
 module.exports = router;

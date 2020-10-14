@@ -43,17 +43,6 @@ router.post('/', ash(async (req, res, next) => {
     sousCategory: Joi.string().valid(...sousCategoryList)
   });
 
-  const imageSchema = Joi.object({ image: Joi.string().max(500000) });
-
-  for (let image of images)
-  {
-    if (!imageSchema.validate(image))
-    {
-      res.send({ error: "The image is too large or in different form." });
-      return;
-    }
-  }
-
   let val = articleSchema.validate(article);
   if (val.error)
   {
@@ -67,44 +56,5 @@ router.post('/', ash(async (req, res, next) => {
   res.send({ article: article });
 }));
 
-router.post('/createImage', ash(async (req, res, next) => {
-  let { user } = req;
-  let { data, imageId, articleId } = req.body;
-
-
-  if (!data || typeof data !== 'string')
-  {
-    res.send({ error: "Image is null or not in Base64 format" });
-    return;
-  }
-
-  if (!articleId)
-  {
-    res.send({ error: "There is no articleId" });
-    return;
-  }
-  articleId = parseInt(articleId);
-
-  if (!imageId)
-  {
-    res.send({ error: "There is no imageId" });
-    return;
-  }
-  imageId = parseInt(imageId);
-
-  let article = await db.Article.findOne({ where: { id: articleId } });
-
-  const possede = await user.hasArticle(article);
-
-  if (!possede)
-  {
-    res.send({ error: "This article doesn't belongs to you." });
-    return;
-  }
-
-  await article.createImage({ data: new Buffer.alloc(data.length, data, 'base64') });
-
-  res.send({});
-}));
 
 module.exports = router;

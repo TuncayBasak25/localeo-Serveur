@@ -83,6 +83,11 @@ app.use('/API/image/read', require('./routes/API/image/read'));
 app.use('/API/image/delete', require('./routes/API/image/delete'));
 app.use('/API/image/update', require('./routes/API/image/update'));
 
+app.use('/API/avis/create', require('./routes/API/avis/create'));
+app.use('/API/avis/read', require('./routes/API/avis/read'));
+app.use('/API/avis/delete', require('./routes/API/avis/delete'));
+app.use('/API/avis/update', require('./routes/API/avis/update'));
+
 app.use('/API/search', require('./routes/API/search'));
 app.use('/API/newArticle', require('./routes/API/article'));
 

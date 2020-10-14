@@ -96,15 +96,5 @@ router.get('/search', ash(async (req, res, next) => {
   res.send( articles );
 }));
 
-router.get('/getImage', ash(async (req, res, next) => {
-  let { imageId } = req.query;
-  imageId = parseInt(imageId);
-
-  const image = await db.Image.findOne({ where: { id: imageId } });
-
-  if (image) image.dataValues.data = image.dataValues.data.toString('base64');
-
-  res.send( {} );
-}));
 
 module.exports = router;
