@@ -50,7 +50,7 @@ router.post('/', ash(async (req, res, next) => {
     return;
   }
 
-  const user = await db.User.findOne({
+  user = await db.User.findOne({
     where: {
       username: user.username
     },
