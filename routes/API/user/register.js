@@ -7,6 +7,9 @@ const db = require('../../../models/index');
 const { Op } = require("sequelize");
 const ash = require('express-async-handler');
 
+const bcrypt = require('bcrypt');
+const salt = 10;
+
 const Joi = require('joi');
 
 const userSchema = Joi.object({
@@ -64,8 +67,10 @@ router.post('/', ash(async (req, res, next) => {
     return;
   }
 
+  const hash = await bcrypt.hash(userInputs.password, salt);
+
   const secret = {
-    password: userInputs.password,
+    password: hash,
     sessionTokens: '{}'
   }
 

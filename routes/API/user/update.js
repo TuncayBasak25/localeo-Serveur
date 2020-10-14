@@ -7,6 +7,9 @@ const db = require('../../../models/index');
 const { Op } = require("sequelize");
 const ash = require('express-async-handler');
 
+const bcrypt = require('bcrypt');
+const salt = 10;
+
 const Joi = require('joi');
 
 const autoLogger = require('../../../middleware/autoLogger');
@@ -33,7 +36,7 @@ const newUserSchema = Joi.object({
   lastname: Joi.string().min(4).max(16),
   address: Joi.string().max(256),
   lattitude: Joi.number(),
-  longitude: Joi.number() 
+  longitude: Joi.number()
 });
 
 const newPasswordSchema = Joi.object({
@@ -85,7 +88,9 @@ router.post('/', ash(async (req, res, next) => {
   {
     let secret = await user.getUserSecret();
 
-    secret.password = newPassword;
+    const hash = await bcrypt.hash(newPassword, salt);
+
+    secret.password = hash;
     await secret.save();
   }
 

@@ -27,17 +27,21 @@ var server = http.createServer(app);
 
  var models = require('../models');
  var fs = require('fs');
+ const bcrypt = require('bcrypt');
+ const salt = 10;
 
  models.sequelize.sync({ force: true })
  .then( async () => {
    const db = require('../models/index');
+
    const tuncay = await db.User.create({
      username: 'tuncay',
      email: 'tuncay.basak@outlook.com',
      role: 'admin'
    });
 
-   tuncay.createUserSecret({ password: '14531453', sessionTokens: '{}' });
+   let hash = await bcrypt.hash('12345678', salt);
+   tuncay.createUserSecret({ password: hash, sessionTokens: '{}' });
 
    const olivier = await db.User.create({
      username: 'olivier',
@@ -46,7 +50,8 @@ var server = http.createServer(app);
      role: 'admin'
    });
 
-   olivier.createUserSecret({ password: 'benlaura', sessionTokens: '{}' });
+   hash = await bcrypt.hash('benlaura', salt);
+   olivier.createUserSecret({ password: hash, sessionTokens: '{}' });
 
 
    let avatar = await fs.readFileSync('./src/avatar/tuncay.jpg');

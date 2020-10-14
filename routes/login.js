@@ -5,6 +5,8 @@ const db = require('../models/index');
 const { Op } = require("sequelize");
 const ash = require('express-async-handler');
 
+const bcrypt = require('bcrypt');
+
 const Joi = require('joi');
 
 const userSchema = Joi.object({
@@ -59,7 +61,9 @@ router.post('/', ash(async (req, res, next) => {
 
   let secret = await user.getUserSecret();
 
-  if (secret.dataValues.password !== req.body.password)
+  let test = await bcrypt.compare(req.body.password, secret.dataValues.password);
+
+  if (!test)
   {
     res.render('login', { error: "Password is wrong.", lastUsername: req.body.username });
     return;

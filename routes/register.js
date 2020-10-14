@@ -5,6 +5,9 @@ const db = require('../models/index');
 const { Op } = require("sequelize");
 const ash = require('express-async-handler');
 
+const bcrypt = require('bcrypt');
+const salt = 10;
+
 const Joi = require('joi');
 
 const userSchema = Joi.object({
@@ -65,8 +68,10 @@ router.post('/', ash(async (req, res, next) => {
     return;
   }
 
+  const hash = await bcrypt.hash(user.password, salt);
+
   const secret = {
-    password: user.password,
+    password: hash,
     sessionTokens: '{}'
   }
   delete user.passwordConfirm;
