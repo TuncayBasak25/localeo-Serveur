@@ -73,8 +73,12 @@ app.use('/API/user/login', require('./routes/API/user/login'));
 app.use('/API/user/logout', require('./routes/API/user/logout'));
 app.use('/API/user/update', require('./routes/API/user/update'));
 
+app.use('/API/article/create', require('./routes/API/article/create'));
+
 app.use('/API/search', require('./routes/API/search'));
 app.use('/API/newArticle', require('./routes/API/article'));
+
+
 //////
 
 
