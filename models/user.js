@@ -24,6 +24,16 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: { field: 'destinaterId' }
       });
 
+      User.hasMany(models.ChatRoom, {
+        as: 'buyingChat',
+        foreignKey: { field: 'buyerId' }
+      });
+
+      User.hasMany(models.ChatRoom, {
+        as: 'sellingChat',
+        foreignKey: { field: 'sellerId' }
+      });
+
       User.hasMany(models.Message, {
         as: "sentMessage",
         foreignKey: { field: 'sourceId' }
@@ -46,7 +56,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     email: DataTypes.STRING,
     password: DataTypes.STRING,
-    sessionTokens: DataTypes.STRING(60000),
+    sessionTokens: {
+      type: DataTypes.STRING(60000),
+      defaultValue: '{}'
+    },
     role: DataTypes.STRING
   }, {
     sequelize,

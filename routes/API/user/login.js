@@ -20,12 +20,16 @@ router.all('/', ash(async (req, res, next) => {
       sessionTokens: {
         [Op.substring]: req.session.id
       }
-    }
+    },
+    include: {[
+      { model: db.Avatar },
+      { model: db.UserInfo }
+    ]}
   });
 
   if (user)
   {
-    res.send({ error: "You are already connected" });
+    res.send({ user });
     return;
   }
 
@@ -46,7 +50,15 @@ router.post('/', ash(async (req, res, next) => {
     return;
   }
 
-  user = await db.User.findOne({ where: {username: user.username } });
+  const user = await db.User.findOne({
+    where: {
+      username: user.username
+    },
+    include: {[
+      { model: db.Avatar },
+      { model: db.UserInfo }
+    ]}
+  });
 
   if (!user)
   {
@@ -60,7 +72,6 @@ router.post('/', ash(async (req, res, next) => {
     return;
   }
 
-  if (user.dataValues.sessionTokens === null) user.dataValues.sessionTokens = JSON.stringify({});
   let sessionTokens = JSON.parse(user.dataValues.sessionTokens);
 
   sessionTokens[req.session.id] = true;
@@ -69,7 +80,7 @@ router.post('/', ash(async (req, res, next) => {
 
   await user.save();
 
-  res.send({});
+  res.send({ user });
 }));
 
 module.exports = router;

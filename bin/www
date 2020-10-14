@@ -37,7 +37,7 @@ var server = http.createServer(app);
      password: '14531453',
      role: 'admin'
    });
-   
+
    const olivier = await db.User.create({
      username: 'olivier',
      email: 'olivier@outlook.com',
@@ -88,38 +88,22 @@ var server = http.createServer(app);
    ];
 
    let articleGeolocation = [
-     JSON.stringify({
+     {
        lattitude: 46.787179,
        longitude: 3.461600
-     }),
-     JSON.stringify({
+     },
+     {
        lattitude: 46.687179,
        longitude: 3.761600
-     }),
-     JSON.stringify({
+     },
+     {
        lattitude: 46.487179,
        longitude: 3.361600
-     }),
-     JSON.stringify({
+     },
+     {
        lattitude: 46.987179,
        longitude: 3.161600
-     })
-   ];
-
-   let articleCategories = [
-     JSON.stringify({
-       spaceship: true
-     }),
-     JSON.stringify({
-       smartphone: true,
-       technologie: true
-     }),
-     JSON.stringify({
-       technologie: true
-     }),
-     JSON.stringify({
-       accessoire: true
-     }),
+     }
    ];
 
    for (let i=0; i<articlePrice.length; i++)
@@ -129,8 +113,8 @@ var server = http.createServer(app);
        title: articleTitle[i],
        description: articleDescription[i],
        price: articlePrice[i],
-       geolocation: articleGeolocation[i],
-       categories: articleCategories[i]
+       lattitude: articleGeolocation[i].lattitude,
+       longitude: articleGeolocation[i].longitude
      }
 
      article = await tuncay.createArticle(article);

@@ -54,48 +54,11 @@ router.post('/', ash(async (req, res, next) => {
   {
     if (image)
     {
-      await article.createImageText({ data: image });
+      await article.createImage({ data: new Buffer.alloc(image.length, image, 'base64') });
     }
   }
 
   res.send({});
-}));
-
-
-
-router.post('/addArticleImage', ash(async (req, res, next) => {
-  const { articleId, data } = req.body;
-
-  const article = await db.Article.findOne({ where: { id: articleId } });
-
-  if (!article)
-  {
-    res.send({error: "There is no article"});
-    return;
-  }
-  const image = await db.ImageText.create({ data: data });
-
-  await article.addImageText(image);
-
-  res.send({ id: image.dataValues.id });
-}));
-
-router.post('/CompleteArticleImage', ash(async (req, res, next) => {
-  const { imageId, data } = req.body;
-
-  const image = await db.ImageText.findOne({ where: { id: imageId } });
-
-  if (!image)
-  {
-    res.send({error: "There is no image"});
-    return;
-  }
-
-  image.data = image.dataValues.data + data;
-
-  await image.save();
-
-  res.send({ id: image.dataValues.id });
 }));
 
 

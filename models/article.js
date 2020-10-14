@@ -15,15 +15,19 @@ module.exports = (sequelize, DataTypes) => {
       Article.belongsTo(models.User);
 
       Article.hasMany(models.Image);
-      Article.hasMany(models.ImageText);
+
+      Article.belongsTo(models.Category);
+      Article.belongsTo(models.SousCategory);
     }
   };
   Article.init({
     title: DataTypes.STRING,
     description: DataTypes.STRING,
     price: DataTypes.INTEGER,
-    geolocation: DataTypes.STRING,
-    categories: DataTypes.STRING
+    lattitude: DataTypes.FLOAT,
+    longitude: DataTypes.FLOAT,
+    sousCategory: DataTypes.STRING
+
   }, {
     sequelize,
     modelName: 'Article',

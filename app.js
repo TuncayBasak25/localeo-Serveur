@@ -72,7 +72,7 @@ app.use('/API/register', require('./routes/API/register'));
 app.use('/API/login', require('./routes/API/login'));
 app.use('/API/logout', require('./routes/API/logout'));
 app.use('/API/search', require('./routes/API/search'));
-app.use('/API/newArticle', require('./routes/API/newArticle'));
+app.use('/API/newArticle', require('./routes/API/article'));
 //////
 
 
