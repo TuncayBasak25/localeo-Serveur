@@ -12,12 +12,12 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
 
-      Article.belongsTo(models.User);
+      Article.belongsTo(models.User, { onDelete: 'cascade' });
 
-      Article.hasMany(models.Image);
+      Article.hasMany(models.Image, { onDelete: 'cascade' });
 
-      Article.belongsTo(models.Category);
-      Article.belongsTo(models.SousCategory);
+      Article.belongsTo(models.Category, { onDelete: 'cascade' });
+      Article.belongsTo(models.SousCategory, { onDelete: 'cascade' });
     }
   };
   Article.init({

@@ -14,15 +14,17 @@ module.exports = (sequelize, DataTypes) => {
 
       Message.belongsTo(models.User, {
         as: "source",
-        foreignKey: { field: 'sourceId' }
+        foreignKey: { field: 'sourceId' },
+        onDelete: 'cascade'
       });
 
       Message.belongsTo(models.User, {
         as: "target",
-        foreignKey: { field: 'targetId' }
+        foreignKey: { field: 'targetId' },
+        onDelete: 'cascade'
       });
 
-      Message.belongsTo(models.ChatRoom);
+      Message.belongsTo(models.ChatRoom, { onDelete: 'cascade' });
     }
   };
   Message.init({

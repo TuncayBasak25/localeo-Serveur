@@ -11,42 +11,48 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      User.hasOne(models.UserSecret);
-      User.hasOne(models.Avatar);
+      User.hasOne(models.UserSecret, { onDelete: 'cascade' } );
+      User.hasOne(models.Avatar, { onDelete: 'cascade' } );
 
       User.hasMany(models.Avis, {
         as: 'postedAvis',
-        foreignKey: { field: 'posterId' }
+        foreignKey: { field: 'posterId' },
+        onDelete: 'cascade'
       });
 
       User.hasMany(models.Avis, {
         as: "destinatedAvis",
-        foreignKey: { field: 'destinaterId' }
+        foreignKey: { field: 'destinaterId' },
+        onDelete: 'cascade'
       });
 
       User.hasMany(models.ChatRoom, {
         as: 'buyingChat',
-        foreignKey: { field: 'buyerId' }
+        foreignKey: { field: 'buyerId' },
+        onDelete: 'cascade'
       });
 
       User.hasMany(models.ChatRoom, {
         as: 'sellingChat',
-        foreignKey: { field: 'sellerId' }
+        foreignKey: { field: 'sellerId' },
+        onDelete: 'cascade'
       });
 
       User.hasMany(models.Message, {
         as: "sentMessage",
-        foreignKey: { field: 'sourceId' }
+        foreignKey: { field: 'sourceId' },
+        onDelete: 'cascade'
       });
 
       User.hasMany(models.Message, {
         as: "recievedMessage",
-        foreignKey: { field: 'targetId' }
+        foreignKey: { field: 'targetId' },
+        onDelete: 'cascade'
       });
 
-      User.hasMany(models.Article);
+      User.hasMany(models.Article, { onDelete: 'cascade' } );
 
-      User.hasMany(models.ArchivedArticle);
+      User.hasMany(models.ArchivedArticle, { onDelete: 'cascade' } );
     }
   };
   User.init({

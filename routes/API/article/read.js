@@ -104,7 +104,7 @@ router.get('/getImage', ash(async (req, res, next) => {
 
   if (image) image.dataValues.data = image.dataValues.data.toString('base64');
 
-  res.send( image );
+  res.send( {} );
 }));
 
 module.exports = router;

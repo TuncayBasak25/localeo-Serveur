@@ -14,15 +14,17 @@ module.exports = (sequelize, DataTypes) => {
 
       ChatRoom.belongsTo(models.User, {
         as: "buyer",
-        foreignKey: { field: 'buyerId' }
+        foreignKey: { field: 'buyerId' },
+        onDelete: 'cascade'
       });
 
       ChatRoom.belongsTo(models.User, {
         as: "seller",
-        foreignKey: { field: 'sellerId' }
+        foreignKey: { field: 'sellerId' },
+        onDelete: 'cascade'
       });
 
-      ChatRoom.hasMany(models.Message);
+      ChatRoom.hasMany(models.Message, { onDelete: 'cascade' });
     }
   };
   ChatRoom.init({

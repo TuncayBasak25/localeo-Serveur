@@ -13,12 +13,14 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Avis.belongsTo(models.User, {
         as: "poster",
-        foreignKey: { field: 'posterId' }
+        foreignKey: { field: 'posterId' },
+        onDelete: 'cascade'
       });
 
       Avis.belongsTo(models.User, {
         as: "destinater",
-        foreignKey: { field: 'destinaterId' }
+        foreignKey: { field: 'destinaterId' },
+        onDelete: 'cascade'
       });
     }
   };

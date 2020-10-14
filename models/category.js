@@ -11,8 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Category.hasMany(models.SousCategory);
-      Category.hasMany(models.Article);
+      Category.hasMany(models.SousCategory, { onDelete: 'cascade' });
+      Category.hasMany(models.Article, { onDelete: 'cascade' });
     }
   };
   Category.init({

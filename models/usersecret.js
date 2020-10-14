@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      UserSecret.belongsTo(models.User);
+      UserSecret.belongsTo(models.User, { onDelete: 'cascade' } );
     }
   };
   UserSecret.init({
