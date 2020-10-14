@@ -67,7 +67,7 @@ router.post('/', ash(async (req, res, next) => {
   res.send({ article: article });
 }));
 
-router.post('/', ash(async (req, res, next) => {
+router.post('/createImage', ash(async (req, res, next) => {
   let { user } = req;
   let { data, imageId, articleId } = req.body;
 

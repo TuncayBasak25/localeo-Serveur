@@ -76,6 +76,7 @@ app.use('/API/user/update', require('./routes/API/user/update'));
 app.use('/API/article/create', require('./routes/API/article/create'));
 app.use('/API/article/read', require('./routes/API/article/read'));
 app.use('/API/article/delete', require('./routes/API/article/delete'));
+app.use('/API/article/update', require('./routes/API/article/update'));
 
 app.use('/API/search', require('./routes/API/search'));
 app.use('/API/newArticle', require('./routes/API/article'));
