@@ -65,14 +65,14 @@ router.post('/', ash(async (req, res, next) => {
   }
 
   const secret = {
-    password: user.password,
+    password: userInputs.password,
     sessionTokens: '{}'
   }
 
-  delete user.passwordConfirm;
-  delete user.password;
+  delete userInputs.passwordConfirm;
+  delete userInputs.password;
 
-  user = await db.User.create(user);
+  user = await db.User.create(userInputs);
   await user.createUserSecret(secret)
 
   let data = null;
