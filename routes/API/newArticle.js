@@ -73,7 +73,7 @@ router.post('/addArticleImage', ash(async (req, res, next) => {
 router.post('/CompleteArticleImage', ash(async (req, res, next) => {
   const { imageId, data } = req.body;
 
-  const image = await db.ImageText.findOne({ where: { id: imageId } });
+  const image = await db.ImageText.findOne({ where: { id: parseInt(imageId) } });
 
   if (!image)
   {
