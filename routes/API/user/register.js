@@ -16,6 +16,9 @@ const userSchema = Joi.object({
   passwordConfirm: Joi.string().equal(Joi.ref('password')).required()
 });
 
+const avatarSchema = Joi.object({
+  avatar: Joi.string().max(50000)
+});
 
 const autoLogger = require('../../../middleware/autoLogger');
 router.all('/', ash(autoLogger) );
@@ -29,26 +32,23 @@ router.all('/', ash(async (req, res, next) => {
 }));
 
 router.post('/', ash(async (req, res, next) => {
-  let user = {
-    username: req.body.username,
-    email: req.body.email,
-    password: req.body.password,
-    passwordConfirm: req.body.passwordConfirm
-  }
+  const { userInputs, avatarData } = req.body;
 
-  let data = null;
-  if (req.files && req.files.avatar) data = req.files.avatar.data;
-
-
-  const validateUserSchema = userSchema.validate(user);
-
-  if (validateUserSchema.error)
+  let val = userSchema.validate(userInputs);
+  if (val.error)
   {
-    res.send({ error: validateUserSchema.error.details[0].message });
+    res.send({ error: val.error.details[0].message });
     return;
   }
 
-  let testUser = await db.User.findOne({ where: {username: user.username } });
+  let val = avatarSchema.validate(avatarData);
+  if (val.error)
+  {
+    res.send({ error: val.error.details[0].message });
+    return;
+  }
+
+  let testUser = await db.User.findOne({ where:  { username: userInputs.username } });
 
   if (testUser)
   {
@@ -56,7 +56,7 @@ router.post('/', ash(async (req, res, next) => {
     return;
   }
 
-  testUser = await db.User.findOne({ where: {email: req.body.email } });
+  testUser = await db.User.findOne({ where: { email: userInputs.email } });
 
   if (testUser)
   {
@@ -68,17 +68,20 @@ router.post('/', ash(async (req, res, next) => {
     password: user.password,
     sessionTokens: '{}'
   }
+
   delete user.passwordConfirm;
   delete user.password;
 
   user = await db.User.create(user);
   await user.createUserSecret(secret)
 
-  if (data)
+  let data = null;
+  if (avatarData)
   {
-    let avatar = await db.Avatar.create({ data: data});
-    await user.setAvatar(avatar);
+    data = avatarData;
   }
+  let avatar = await db.Avatar.create({ data: data});
+  await user.setAvatar(avatar);
 
   res.send({});
 }));

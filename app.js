@@ -68,9 +68,10 @@ app.use('/logout', require('./routes/logout'));
 app.use('/addArticle', require('./routes/addArticle'));
 app.use('/postAvis', require('./routes/postAvis'));
 
-app.use('/API/register', require('./routes/API/user/register'));
-app.use('/API/login', require('./routes/API/user/login'));
-app.use('/API/logout', require('./routes/API/user/logout'));
+app.use('/API/user/register', require('./routes/API/user/register'));
+app.use('/API/user/login', require('./routes/API/user/login'));
+app.use('/API/user/logout', require('./routes/API/user/logout'));
+app.use('/API/user/update', require('./routes/API/user/update'));
 
 app.use('/API/search', require('./routes/API/search'));
 app.use('/API/newArticle', require('./routes/API/article'));

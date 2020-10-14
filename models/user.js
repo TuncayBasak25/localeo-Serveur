@@ -59,8 +59,9 @@ module.exports = (sequelize, DataTypes) => {
     firstname: DataTypes.STRING,
     lastname: DataTypes.STRING,
     phone: DataTypes.STRING,
-    adress: DataTypes.STRING,
-    geolocation: DataTypes.STRING,
+    address: DataTypes.STRING,
+    lattitude: DataTypes.FLOAT,
+    longitude: DataTypes.FLOAT,
 
     role: DataTypes.STRING
   }, {
