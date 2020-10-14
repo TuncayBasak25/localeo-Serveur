@@ -21,10 +21,10 @@ router.all('/', ash(async (req, res, next) => {
         [Op.substring]: req.session.id
       }
     },
-    include: {[
+    include: [
       { model: db.Avatar },
       { model: db.UserInfo }
-    ]}
+    ]
   });
 
   if (user)
