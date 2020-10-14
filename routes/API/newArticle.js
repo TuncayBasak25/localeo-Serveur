@@ -65,7 +65,7 @@ router.post('/addArticleImage', ash(async (req, res, next) => {
   }
   const image = await db.ImageText.create({ data: data });
 
-  await article.addImageText({ data: data });
+  await article.addImageText(image);
 
   res.send({ id: image.dataValues.id });
 }));
@@ -73,7 +73,7 @@ router.post('/addArticleImage', ash(async (req, res, next) => {
 router.post('/CompleteArticleImage', ash(async (req, res, next) => {
   const { imageId, data } = req.body;
 
-  const image = await db.ImageText.findOne({ where: { id: parseInt(imageId) } });
+  const image = await db.ImageText.findOne({ where: { id: imageId } });
 
   if (!image)
   {
