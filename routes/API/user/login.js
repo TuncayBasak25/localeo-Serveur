@@ -54,10 +54,10 @@ router.post('/', ash(async (req, res, next) => {
     where: {
       username: user.username
     },
-    include: {[
+    include: [
       { model: db.Avatar },
       { model: db.UserInfo }
-    ]}
+    ]
   });
 
   if (!user)
