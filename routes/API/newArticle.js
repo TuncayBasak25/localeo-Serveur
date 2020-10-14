@@ -81,7 +81,7 @@ router.post('/CompleteArticleImage', ash(async (req, res, next) => {
     return;
   }
 
-  image.data = image.dataValues.data += data;
+  image.data = image.dataValues.data + data;
 
   await image.save();
 
