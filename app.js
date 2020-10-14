@@ -78,6 +78,11 @@ app.use('/API/article/read', require('./routes/API/article/read'));
 app.use('/API/article/delete', require('./routes/API/article/delete'));
 app.use('/API/article/update', require('./routes/API/article/update'));
 
+app.use('/API/image/create', require('./routes/API/image/create'));
+app.use('/API/image/read', require('./routes/API/image/read'));
+app.use('/API/image/delete', require('./routes/API/image/delete'));
+app.use('/API/image/update', require('./routes/API/image/update'));
+
 app.use('/API/search', require('./routes/API/search'));
 app.use('/API/newArticle', require('./routes/API/article'));
 
