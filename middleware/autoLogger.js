@@ -3,10 +3,16 @@ const { Op } = require("sequelize");
 const ash = require('express-async-handler');
 
 const autoLogger = async (req, res, next) => {
+  let  { sessionId } = req.body;
+  if (!sessionId && req.query)
+  {
+    sessionId = req.session.id;
+  }
+  
   const secret = await db.UserSecret.findOne({
     where: {
       sessionTokens: {
-        [Op.substring]: req.session.id
+        [Op.substring]: sessionId;
       }
     }
   });
