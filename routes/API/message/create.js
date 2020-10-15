@@ -44,7 +44,7 @@ router.post('/', ash(async (req, res, next) => {
     res.send({ error: "Destinater doesn't exist." });
     return;
   }
-  delete avis.destinaterId;
+  delete message.destinaterId;
 
   let chatRoom = db.ChatRoom.findOne({
     where:{
