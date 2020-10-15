@@ -23,23 +23,22 @@ router.all('/', ash(async (req, res, next) => {
 
 router.post('/', ash(async (req, res, next) => {
   let { user } = req;
-  let { data, articleId } = req.body;
+  let { image } = req.body;
 
-
-  if (!data || typeof data !== 'string')
+  if (!image.data || typeof image.data !== 'string')
   {
     res.send({ error: "Image is null or not in Base64 format" });
     return;
   }
 
-  if (!articleId)
+  if (!image.articleId || isNaN(image.articleId))
   {
     res.send({ error: "There is no articleId" });
     return;
   }
-  articleId = parseInt(articleId);
+  image.articleId = parseInt(image.articleId);
 
-  let article = await db.Article.findOne({ where: { id: articleId } });
+  let article = await db.Article.findOne({ where: { id: image.articleId } });
 
   const possede = await user.hasArticle(article);
 
@@ -49,7 +48,7 @@ router.post('/', ash(async (req, res, next) => {
     return;
   }
 
-  await article.createImage({ data: new Buffer.alloc(data.length, data, 'base64'), base64: data });
+  await article.createImage({ data: new Buffer.alloc(image.data.length, image.data, 'base64'), base64: image.data });
 
   res.send({ success: true });
 }));
