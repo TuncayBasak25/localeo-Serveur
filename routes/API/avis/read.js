@@ -50,7 +50,10 @@ router.get('/avisFor', ash(async (req, res, next) => {
     return;
   }
 
-  let avisList = await destinater.getDestinatedAvis({
+  let avisList = await db.Avis.findAll({
+    where: {
+      DestinaterId: destinaterId
+    },
     limit: max,
     offset: (page-1) * max
   });
@@ -88,6 +91,9 @@ router.get('/avisFrom', ash(async (req, res, next) => {
   }
 
   let avisList = await db.Avis.findAll({
+    where: {
+      PosterId: posterId
+    },
     limit: max,
     offset: (page-1) * max
   });

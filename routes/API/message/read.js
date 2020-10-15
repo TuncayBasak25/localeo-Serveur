@@ -137,7 +137,10 @@ router.get('/roomMessages', ash(async (req, res, next) => {
     return;
   }
 
-  let messageList = await chatRoom.getMessages({
+  let messageList = await db.Message.findAll({
+    where: {
+      ChatRoomId: chatRoom.dataValues.id
+    },
     limit: max,
     offset: (page-1) * max
   });
