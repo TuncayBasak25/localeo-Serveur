@@ -23,30 +23,30 @@ router.all('/', ash(async (req, res, next) => {
 
 router.post('/', ash(async (req, res, next) => {
   let { user } = req;
-  let { data, imageId, articleId } = req.body;
+  let { newImage } = req.body;
 
 
-  if (!data || typeof data !== 'string')
+  if (!newImage.data || typeof newImage.data !== 'string')
   {
     res.send({ error: "Image is null or not in Base64 format" });
     return;
   }
 
-  if (!articleId)
+  if (!newImage.articleId)
   {
     res.send({ error: "There is no articleId" });
     return;
   }
-  articleId = parseInt(articleId);
+  newImage.articleId = parseInt(newImage.articleId);
 
-  if (!imageId)
+  if (!newImage.imageId)
   {
     res.send({ error: "There is no imageId" });
     return;
   }
-  imageId = parseInt(imageId);
+  newImage.imageId = parseInt(newImage.imageId);
 
-  let article = await db.Article.findOne({ where: { id: articleId } });
+  let article = await db.Article.findOne({ where: { id: newImage.articleId } });
 
   const hasArticle = await user.hasArticle(article);
 
@@ -56,7 +56,7 @@ router.post('/', ash(async (req, res, next) => {
     return;
   }
 
-  let image = await db.Image.findOne({ where: { id: imageId } });
+  let image = await db.Image.findOne({ where: { id: newImage.imageId } });
 
   const hasImage = await article.hasImage(image);
 
@@ -66,8 +66,8 @@ router.post('/', ash(async (req, res, next) => {
     return;
   }
 
-  image.data = new Buffer.alloc(data.length, data, 'base64');
-  image.base64 = data;
+  image.data = new Buffer.alloc(newImage.data.length, newImage.data, 'base64');
+  image.base64 = newImage.data;
 
   await image.save();
 

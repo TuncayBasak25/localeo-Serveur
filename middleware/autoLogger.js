@@ -16,10 +16,6 @@ const autoLogger = async (req, res, next) => {
     let user = await secret.getUser();
     req.user = user;
   }
-  else
-  {
-    req.user = await db.User.findOne({ where: { id: 1 } });
-  }
 
   next();
 }
