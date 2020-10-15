@@ -4,6 +4,7 @@ const ash = require('express-async-handler');
 
 const autoLogger = async (req, res, next) => {
   let  { sessionId } = req.body;
+  console.log(sessionId);
   if (!sessionId)
   {
     sessionId = req.session.id;
