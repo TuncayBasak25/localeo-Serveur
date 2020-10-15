@@ -36,20 +36,16 @@ const newUserSchema = Joi.object({
   lastname: Joi.string().min(4).max(16),
   address: Joi.string().max(256),
   lattitude: Joi.number(),
-  longitude: Joi.number()
-});
+  longitude: Joi.number(),
 
-const newPasswordSchema = Joi.object({
-  password: Joi.string().min(8).max(256)
-});
+  password: Joi.string().min(8).max(256),
 
-const newAvatarSchema = Joi.object({
   avatar: Joi.string().max(50000)
 });
 
 router.post('/', ash(async (req, res, next) => {
   const { user } = req;
-  const { newUser, newPassword, newAvatar } = req.body;
+  const { newUser } = req.body;
 
   let val = newUserSchema.validate(newUser);
   if (val.error)
@@ -58,43 +54,37 @@ router.post('/', ash(async (req, res, next) => {
     return;
   }
 
-  val = newPasswordSchema.validate(newPassword);
-  if (val.error)
-  {
-    res.send({ error: val.error.details[0].message });
-    return;
-  }
-
-  val = newAvatarSchema.validate(newAvatar);
-  if (val.error)
-  {
-    res.send({ error: val.error.details[0].message });
-    return;
-  }
-
   if (newUser)
   {
-    for (let entry of Object.entries(newUser)) user[entry] = newUser[entry];
+    for (let entry of Object.entries(newUser))
+    {
+      if (entry !== 'password' && entry !== 'avatar') user[entry] = newUser[entry];
+    }
     await user.save();
   }
-
-  if (newAvatar)
+  else
   {
-    user.avatar.data = new Buffer.alloc(newAvatar.length, newAvatar, 'base64');
+    res.send( { error: "New info are missing!" } );
+    return;
+  }
+
+  if (newUser.avatar)
+  {
+    user.avatar.data = new Buffer.alloc(newUser.avatar.length, newUser.avatar, 'base64');
     await user.avatar.save();
   }
 
-  if (newPassword)
+  if (newUser.password)
   {
     let secret = await user.getUserSecret();
 
-    const hash = await bcrypt.hash(newPassword, salt);
+    const hash = await bcrypt.hash(newUser.password, salt);
 
     secret.password = hash;
     await secret.save();
   }
 
-  res.send(user);
+  res.send( { succes: true } );
 }));
 
 module.exports = router;
