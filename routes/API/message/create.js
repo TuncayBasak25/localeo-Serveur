@@ -46,7 +46,7 @@ router.post('/', ash(async (req, res, next) => {
   }
   delete message.destinaterId;
 
-  let chatRoom = db.ChatRoom.findOne({
+  let chatRoom = await db.ChatRoom.findOne({
     where:{
       [Op.or]: [
         {
