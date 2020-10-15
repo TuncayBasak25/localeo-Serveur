@@ -6,7 +6,7 @@ const autoLogger = async (req, res, next) => {
   const secret = await db.UserSecret.findOne({
     where: {
       sessionTokens: {
-        [Op.substring]: sessionId
+        [Op.substring]: req.session.id
       }
     }
   });
