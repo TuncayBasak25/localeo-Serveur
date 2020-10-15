@@ -77,7 +77,7 @@ router.post('/', ash(async (req, res, next) => {
 
   await secret.save();
 
-  res.send(user);
+  res.send({ user: user, sessionId: req.session.id });
 }));
 
 module.exports = router;
