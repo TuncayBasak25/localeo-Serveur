@@ -21,6 +21,68 @@ const Joi = require('joi');
 //   next();
 // }));
 
+router.get('/', ash(async (req, res, next) => {
+  let { user } = req;
+  let { articleId } = req.query;
+
+  if (!articleId)
+  {
+    res.send({ error: "There is no articleId" });
+    return;
+  }
+  articleId = parseInt(articleId);
+
+  let article = await db.Article.findOne({
+    where: {
+      id: articleId
+    }
+  });
+
+  res.send( { article: article } );
+}));
+
+router.get('/getArticleOf', ash(async (req, res, next) => {
+  let { user } = req;
+  let { sellerId, page, max } = req.query;
+
+  if (!sellerId)
+  {
+    res.send({ error: "There is no sellerId" });
+    return;
+  }
+  sellerId = parseInt(sellerId);
+
+  if (!page) page = 1;
+  page = parseInt(page);
+
+  if (!max) max = 20;
+  max = parseInt(max);
+  if (max > 20)
+  {
+    res.send( { error: "Max per page is 20" } );
+    return;
+  }
+
+  let seller = await db.User.findOne({
+    where: {
+      id: sellerId
+    }
+  });
+
+  if (!seller)
+  {
+    res.send({ error: "Seller doesn't exist." });
+    return;
+  }
+
+  let articleList = await seller.getArticles({
+    limit: max,
+    offset: (page-1) * max
+  });
+
+  res.send( articleList );
+}));
+
 router.get('/search', ash(async (req, res, next) => {
   let { words, categories, sousCategories, page, max } = req.query;
 
