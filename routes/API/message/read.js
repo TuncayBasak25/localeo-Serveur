@@ -95,7 +95,7 @@ router.get('/getChatRoom', ash(async (req, res, next) => {
   res.redirect('/API/message/roomMessages?chatRoomId=' + chatRoom.dataValues.id)
 }));
 
-router.get('/roomMessages', ash(async (req, res, next) => {
+router.get('/getRoomMessages', ash(async (req, res, next) => {
   let { user } = req;
   let { chatRoomId, page, max } = req.query;
 
