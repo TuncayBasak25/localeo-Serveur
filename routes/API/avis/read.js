@@ -87,7 +87,7 @@ router.get('/avisFrom', ash(async (req, res, next) => {
     return;
   }
 
-  let avisList = await poster.getPostedAvis({
+  let avisList = await db.Avis.findAll({
     limit: max,
     offset: (page-1) * max
   });
