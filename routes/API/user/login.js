@@ -19,10 +19,11 @@ const userSchema = Joi.object({
 const autoLogger = require('../../../middleware/autoLogger');
 router.all('/', ash(autoLogger) );
 router.all('/', ash(async (req, res, next) => {
-  if (req.user)
+  let { user } = req;
+  if (user)
   {
-    let avatar = await req.user.getAvatar();
-    req.user.Avatar = avatar;
+    let avatar = await user.getAvatar();
+    user.Avatar = avatar;
     res.send(user);
     return;
   }
