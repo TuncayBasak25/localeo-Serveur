@@ -16,7 +16,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Image.init({
-    data: DataTypes.BLOB
+    data: DataTypes.BLOB,
+    base64: DataTypes.TEXT('long')
   }, {
     sequelize,
     modelName: 'Image',

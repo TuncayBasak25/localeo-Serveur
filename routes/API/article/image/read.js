@@ -26,9 +26,18 @@ router.get('/', ash(async (req, res, next) => {
   let { imageId } = req.query;
   imageId = parseInt(imageId);
 
-  const image = await db.Image.findOne({ where: { id: imageId } });
+  const image = await db.Image.findOne({ where: { id: imageId }, attributes: ['id', 'data'] });
 
   if (image) image.dataValues.data = image.dataValues.data.toString('base64');
+
+  res.send( image );
+}));
+
+router.get('/base64', ash(async (req, res, next) => {
+  let { imageId } = req.query;
+  imageId = parseInt(imageId);
+
+  const image = await db.Image.findOne({ where: { id: imageId }, attributes: ['id', 'base64'] });
 
   res.send( image );
 }));

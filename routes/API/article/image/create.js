@@ -56,7 +56,7 @@ router.post('/', ash(async (req, res, next) => {
     return;
   }
 
-  await article.createImage({ data: new Buffer.alloc(data.length, data, 'base64') });
+  await article.createImage({ data: new Buffer.alloc(data.length, data, 'base64'), base64: data });
 
   res.send({});
 }));

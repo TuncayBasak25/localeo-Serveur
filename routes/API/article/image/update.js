@@ -67,6 +67,7 @@ router.post('/', ash(async (req, res, next) => {
   }
 
   image.data = new Buffer.alloc(data.length, data, 'base64');
+  image.base64 = data;
 
   await image.save();
 
