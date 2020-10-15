@@ -21,7 +21,7 @@ const Joi = require('joi');
 //   next();
 // }));
 
-router.get('/', ash(async (req, res, next) => {
+router.get('/avisFor', ash(async (req, res, next) => {
   let { destinaterId, page, max } = req.query;
 
   if (!destinaterId)
@@ -58,5 +58,41 @@ router.get('/', ash(async (req, res, next) => {
   res.send( avisList );
 }));
 
+router.get('/avisFrom', ash(async (req, res, next) => {
+  let { posterId, page, max } = req.query;
+
+  if (!posterId)
+  {
+    res.send({ error: "There is no posterId" });
+    return;
+  }
+  posterId = parseInt(posterId);
+
+  if (!page) page = 1;
+  page = parseInt(page);
+
+  if (!max) max = 20;
+  max = parseInt(max);
+  if (max > 20)
+  {
+    res.send( { error: "Max per page is 20" } );
+    return;
+  }
+
+  let poster = await db.User.findOne({ where: { id: posterId } });
+
+  if (!poster)
+  {
+    res.send({ error: "Poster doesn't exist." });
+    return;
+  }
+
+  let avisList = await poster.getPostedAvis({
+    limit: max,
+    offset: (page-1) * max
+  });
+
+  res.send( avisList );
+}));
 
 module.exports = router;
