@@ -23,7 +23,7 @@ router.all('/', ash(async (req, res, next) => {
 
 router.post('/', ash(async (req, res, next) => {
   let { user } = req;
-  let { data, imageId, articleId } = req.body;
+  let { data, articleId } = req.body;
 
 
   if (!data || typeof data !== 'string')
@@ -38,13 +38,6 @@ router.post('/', ash(async (req, res, next) => {
     return;
   }
   articleId = parseInt(articleId);
-
-  if (!imageId)
-  {
-    res.send({ error: "There is no imageId" });
-    return;
-  }
-  imageId = parseInt(imageId);
 
   let article = await db.Article.findOne({ where: { id: articleId } });
 
