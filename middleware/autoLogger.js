@@ -4,11 +4,11 @@ const ash = require('express-async-handler');
 
 const autoLogger = async (req, res, next) => {
   let  { sessionId } = req.body;
-  if (!sessionId && req.query)
+  if (!sessionId)
   {
     sessionId = req.session.id;
   }
-  
+
   const secret = await db.UserSecret.findOne({
     where: {
       sessionTokens: {
