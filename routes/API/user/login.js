@@ -62,7 +62,7 @@ router.post('/', ash(async (req, res, next) => {
 
   let test = await bcrypt.compare(req.body.password, secret.dataValues.password);
 
-  if (test)
+  if (!test)
   {
     res.send( { error: "Password is wrong." });
     return;
