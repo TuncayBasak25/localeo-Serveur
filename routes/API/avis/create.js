@@ -49,8 +49,8 @@ router.post('/', ash(async (req, res, next) => {
   delete avis.destinaterId;
 
   avis = await db.Avis.create(avis);
-  await user.addPostedAvis(avis);
-  await destinater.addDestinatedAvis(avis);
+  await avis.setPoster(user);
+  await avis.setDestinater(destinater);
 
   res.send({ avis: avis });
 }));
