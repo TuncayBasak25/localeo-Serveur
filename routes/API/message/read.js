@@ -49,6 +49,52 @@ router.get('/', ash(async (req, res, next) => {
   res.send( { message: message } );
 }));
 
+router.get('/getChatRoom', ash(async (req, res, next) => {
+  let { user } = req;
+  let { corresponderId } = req.query;
+
+  if (!corresponderId)
+  {
+    res.send({ error: "There is no corresponderId" });
+    return;
+  }
+  corresponderId = parseInt(corresponderId);
+
+  let destinater = db.User.findOne({ where: { id: corresponderId } });
+  if (!destinater)
+  {
+    res.send({ error: "There is no such corresponder." });
+    return;
+  }
+
+  let chatRoom = await db.ChatRoom.findOne({
+    where: {
+      [Op.and]: [
+        {
+          [Op.or]: [
+            { PosterId: corresponderId },
+            { DestinaterId: corresponderId }
+          ]
+        },
+        {
+          [Op.or]: [
+            { PosterId: user.dataValues.id },
+            { DestinaterId: user.dataValues.id }
+          ]
+        }
+      ]
+    }
+  });
+
+  if (!chatRoom)
+  {
+    res.send({ error: "There is no such chatRoom." });
+    return;
+  }
+
+  res.redirect('/API/message/roomMessages?chatRoomId=' + chatRoom.dataValues.id)
+}));
+
 router.get('/roomMessages', ash(async (req, res, next) => {
   let { user } = req;
   let { chatRoomId, page, max } = req.query;
