@@ -16,37 +16,37 @@ module.exports = (sequelize, DataTypes) => {
 
       User.hasMany(models.Avis, {
         as: 'postedAvis',
-        foreignKey: { field: 'posterId' },
+        foreignKey: { field: 'PosterId' },
         onDelete: 'cascade'
       });
 
       User.hasMany(models.Avis, {
         as: "destinatedAvis",
-        foreignKey: { field: 'destinaterId' },
+        foreignKey: { field: 'DestinaterId' },
         onDelete: 'cascade'
       });
 
       User.hasMany(models.ChatRoom, {
         as: 'buyingChat',
-        foreignKey: { field: 'buyerId' },
+        foreignKey: { field: 'BuyerId' },
         onDelete: 'cascade'
       });
 
       User.hasMany(models.ChatRoom, {
         as: 'sellingChat',
-        foreignKey: { field: 'sellerId' },
+        foreignKey: { field: 'SellerId' },
         onDelete: 'cascade'
       });
 
       User.hasMany(models.Message, {
         as: "sentMessage",
-        foreignKey: { field: 'sourceId' },
+        foreignKey: { field: 'PosterId' },
         onDelete: 'cascade'
       });
 
       User.hasMany(models.Message, {
         as: "recievedMessage",
-        foreignKey: { field: 'targetId' },
+        foreignKey: { field: 'DestinaterId' },
         onDelete: 'cascade'
       });
 

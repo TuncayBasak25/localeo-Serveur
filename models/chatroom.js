@@ -14,13 +14,13 @@ module.exports = (sequelize, DataTypes) => {
 
       ChatRoom.belongsTo(models.User, {
         as: "buyer",
-        foreignKey: { field: 'buyerId' },
+        foreignKey: { field: 'BuyerId' },
         onDelete: 'cascade'
       });
 
       ChatRoom.belongsTo(models.User, {
         as: "seller",
-        foreignKey: { field: 'sellerId' },
+        foreignKey: { field: 'SellerId' },
         onDelete: 'cascade'
       });
 

@@ -78,15 +78,20 @@ app.use('/API/article/read', require('./routes/API/article/read'));
 app.use('/API/article/delete', require('./routes/API/article/delete'));
 app.use('/API/article/update', require('./routes/API/article/update'));
 
-app.use('/API/image/create', require('./routes/API/image/create'));
-app.use('/API/image/read', require('./routes/API/image/read'));
-app.use('/API/image/delete', require('./routes/API/image/delete'));
-app.use('/API/image/update', require('./routes/API/image/update'));
+app.use('/API/article/image/create', require('./routes/API/article/image/create'));
+app.use('/API/article/image/read', require('./routes/API/article/image/read'));
+app.use('/API/article/image/delete', require('./routes/API/article/image/delete'));
+app.use('/API/article/image/update', require('./routes/API/article/image/update'));
 
 app.use('/API/avis/create', require('./routes/API/avis/create'));
 app.use('/API/avis/read', require('./routes/API/avis/read'));
 app.use('/API/avis/delete', require('./routes/API/avis/delete'));
 app.use('/API/avis/update', require('./routes/API/avis/update'));
+
+app.use('/API/message/create', require('./routes/API/message/create'));
+app.use('/API/message/read', require('./routes/API/message/read'));
+app.use('/API/message/delete', require('./routes/API/message/delete'));
+app.use('/API/message/update', require('./routes/API/message/update'));
 
 app.use('/API/search', require('./routes/API/search'));
 app.use('/API/newArticle', require('./routes/API/article'));

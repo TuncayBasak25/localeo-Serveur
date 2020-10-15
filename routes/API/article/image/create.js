@@ -3,14 +3,14 @@ const router = express.Router();
 const cors = require('cors');
 router.use(cors());
 
-const db = require('../../../models/index');
+const db = require('../../../../models/index');
 const { Op } = require("sequelize");
 const ash = require('express-async-handler');
 
 const Joi = require('joi');
 
 
-const autoLogger = require('../../../middleware/autoLogger');
+const autoLogger = require('../../../../middleware/autoLogger');
 router.all('/', ash(autoLogger) );
 router.all('/', ash(async (req, res, next) => {
   if (!req.user)
