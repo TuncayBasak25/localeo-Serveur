@@ -51,7 +51,7 @@ router.post('/', ash(async (req, res, next) => {
 
   await article.createImage({ data: new Buffer.alloc(data.length, data, 'base64'), base64: data });
 
-  res.send({});
+  res.send({ success: true });
 }));
 
 module.exports = router;
