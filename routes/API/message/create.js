@@ -47,17 +47,16 @@ router.post('/', ash(async (req, res, next) => {
   delete message.destinaterId;
 
   let chatRoom = await db.ChatRoom.findOne({
-    where:{
+    where: {
       [Op.or]: [
-        {
-          [Op.and]: [
+        {[Op.and]: [
             { BuyerId: user.dataValues.id },
             { SellerId: destinater.dataValues.id }
-          ],
-          [Op.and]: [
+          ]},
+          {[Op.and]: [
             { BuyerId: destinater.dataValues.id },
             { SellerId: user.dataValues.id },
-          ]
+          ]}
         }
       ]
     }
