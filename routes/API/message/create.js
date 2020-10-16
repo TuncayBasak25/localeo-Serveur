@@ -57,7 +57,6 @@ router.post('/', ash(async (req, res, next) => {
             { BuyerId: destinater.dataValues.id },
             { SellerId: user.dataValues.id },
           ]}
-        }
       ]
     }
   });
