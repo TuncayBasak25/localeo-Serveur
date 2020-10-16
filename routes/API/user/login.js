@@ -59,7 +59,7 @@ router.post('/', ash(async (req, res, next) => {
     return;
   }
 
-  if (user.Avatar.data)
+  if (user.Avatar && user.Avatar.data)
   {
     user.Avatar.data = user.Avatar.data.toString('base64');
   }
