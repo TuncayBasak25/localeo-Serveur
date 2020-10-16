@@ -15,23 +15,23 @@ const userSchema = Joi.object({
 });
 
 
-const autoLogger = require('../middleware/autoLogger');
-router.all('/*', ash(autoLogger) );
-router.all('/*', ash(async (req, res, next) => {
-  if (req.user)
-  {
-    res.redirect('/');
-    return;
-  }
-  next();
-}));
+// const autoLogger = require('../middleware/autoLogger');
+// router.all('/*', ash(autoLogger) );
+// router.all('/*', ash(async (req, res, next) => {
+//   if (req.user)
+//   {
+//     res.redirect('/');
+//     return;
+//   }
+//   next();
+// }));
 
 router.get('/', (req, res, next) => {
   res.render('login');
 });
 
 router.post('/', ash(async (req, res, next) => {
-  let user = {
+  user = {
     username: req.body.username,
     password: req.body.password
   }

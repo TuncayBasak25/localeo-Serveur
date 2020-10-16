@@ -35,6 +35,8 @@ router.get('/', ash(async (req, res, next) => {
 
   if (image) image.dataValues.data = image.dataValues.data.toString('base64');
 
+  if (!image) image = { error: "There is no such image!" };
+
   res.send( image );
 }));
 
@@ -48,6 +50,8 @@ router.get('/base64', ash(async (req, res, next) => {
   }
 
   const image = await db.Image.findOne({ where: { id: imageId }, attributes: ['id', 'base64'] });
+
+  if (!image) image = { error: "There is no such image!" };
 
   res.send( image );
 }));
