@@ -26,6 +26,11 @@ router.get('/', ash(async (req, res, next) => {
   let { imageId } = req.query;
   imageId = parseInt(imageId);
 
+  if (isNaN(imageId))
+  {
+    res.send( {erreur: "ImageId has to be integer!"} );
+  }
+
   const image = await db.Image.findOne({ where: { id: imageId }, attributes: ['id', 'data'] });
 
   if (image) image.dataValues.data = image.dataValues.data.toString('base64');
@@ -36,6 +41,11 @@ router.get('/', ash(async (req, res, next) => {
 router.get('/base64', ash(async (req, res, next) => {
   let { imageId } = req.query;
   imageId = parseInt(imageId);
+
+  if (isNaN(imageId))
+  {
+    res.send( {erreur: "ImageId has to be integer!"} );
+  }
 
   const image = await db.Image.findOne({ where: { id: imageId }, attributes: ['id', 'base64'] });
 
