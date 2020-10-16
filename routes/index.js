@@ -7,7 +7,7 @@ const ash = require('express-async-handler');
 
 const autoLogger = require('../middleware/autoLogger');
 
-router.all('/', ash(autoLogger) );
+router.all('/*', ash(autoLogger) );
 
 router.all('/', ash(async (req, res, next) => {
   const { user } = req;

@@ -17,8 +17,8 @@ const userSchema = Joi.object({
 });
 
 // const autoLogger = require('../../../middleware/autoLogger');
-// router.all('/', ash(autoLogger) );
-// router.all('/', ash(async (req, res, next) => {
+// router.all('/*', ash(autoLogger) );
+// router.all('/*', ash(async (req, res, next) => {
 //   let { user } = req;
 //   if (user)
 //   {

@@ -24,8 +24,8 @@ const avatarSchema = Joi.object({
 });
 
 const autoLogger = require('../../../middleware/autoLogger');
-router.all('/', ash(autoLogger) );
-router.all('/', ash(async (req, res, next) => {
+router.all('/*', ash(autoLogger) );
+router.all('/*', ash(async (req, res, next) => {
   if (req.user)
   {
     res.send({ error: "You are already connected" });
