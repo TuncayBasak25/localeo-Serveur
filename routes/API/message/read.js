@@ -11,8 +11,8 @@ const Joi = require('joi');
 
 
 const autoLogger = require('../../../middleware/autoLogger');
-router.all('/', ash(autoLogger) );
-router.all('/', ash(async (req, res, next) => {
+router.all('/*', ash(autoLogger) );
+router.all('/*', ash(async (req, res, next) => {
   if (!req.user)
   {
     res.send({ error: "You are not connected!" })
@@ -123,8 +123,8 @@ router.get('/getRoomMessages', ash(async (req, res, next) => {
         { id: chatRoomId },
         {
           [Op.or]: [
-            { BuyerId: user.dataValues.id },
-            { SellerId: user.dataValues.id }
+            { BuyerId: user.id },
+            { SellerId: user.id }
           ]
         }
       ]
