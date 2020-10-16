@@ -59,6 +59,11 @@ router.post('/', ash(async (req, res, next) => {
     return;
   }
 
+  if (user.Avatar.data)
+  {
+    user.Avatar.data = user.Avatar.data.toString('base64');
+  }
+
   let secret = await user.getUserSecret();
 
   let test = await bcrypt.compare(req.body.password, secret.dataValues.password);
