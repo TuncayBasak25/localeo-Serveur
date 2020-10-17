@@ -16,10 +16,16 @@ const userSchema = Joi.object({
   username: Joi.string().min(4).max(16).required(),
   email: Joi.string().email({ tlds: { allow: false } }).required(),
   password: Joi.string().min(8).max(256).required(),
-  passwordConfirm: Joi.string().equal(Joi.ref('password')).required()
-});
+  passwordConfirm: Joi.string().equal(Joi.ref('password')).required(),
 
-const avatarSchema = Joi.object({
+  firstName: Joi.string().min(4).max(16),
+  firstName: Joi.string().min(4).max(16),
+  phone: Joi.string().min(10).max(10),
+  address: Joi.string().min(4).max(255),
+
+  lattitude: Joi.number(),
+  longitude: Joi.number(),
+
   avatar: Joi.string().max(50000)
 });
 
@@ -35,16 +41,9 @@ router.all('/*', ash(async (req, res, next) => {
 }));
 
 router.post('/', ash(async (req, res, next) => {
-  const { userInputs, avatarData } = req.body;
+  const { userInputs } = req.body;
 
   let val = userSchema.validate(userInputs);
-  if (val.error)
-  {
-    res.send({ error: val.error.details[0].message });
-    return;
-  }
-
-  val = avatarSchema.validate(avatarData);
   if (val.error)
   {
     res.send({ error: val.error.details[0].message });
@@ -77,6 +76,9 @@ router.post('/', ash(async (req, res, next) => {
   delete userInputs.passwordConfirm;
   delete userInputs.password;
 
+  let avatarData = userInputs.avatar;
+  delete userInputs.avatar;
+
   user = await db.User.create(userInputs);
   await user.createUserSecret(secret)
 
@@ -88,7 +90,7 @@ router.post('/', ash(async (req, res, next) => {
   let avatar = await db.Avatar.create({ data: data});
   await user.setAvatar(avatar);
 
-  res.send({});
+  res.send({ success: "User created!" });
 }));
 
 module.exports = router;
