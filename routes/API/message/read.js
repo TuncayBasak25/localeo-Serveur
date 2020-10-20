@@ -49,6 +49,31 @@ router.get('/', ash(async (req, res, next) => {
   res.send( { message: message } );
 }));
 
+router.get('/getNewMessages', ash(async (req, res, next) => {
+  const { user } = req;
+  const { lastMessageId } = req.query;
+
+  const newMessages = await db.Message.findAll({
+    where: {
+      [Op.and]: [
+        { id: { [Op.gt]: [ lastMessageId ] } },
+        {[Op.or]: [
+          { PosterId: user.id },
+          { DestinaterId:  user.id }
+        ]}
+      ]
+    }
+  });
+
+  if (newMessages === [])
+  {
+    res.send({ alert: "There is no new message." });
+    return;
+  }
+
+  res.send( newMessages );
+}));
+
 router.get('/getChatRoom', ash(async (req, res, next) => {
   let { user } = req;
   let { corresponderId } = req.query;
@@ -96,7 +121,7 @@ router.get('/getChatRoom', ash(async (req, res, next) => {
 }));
 
 router.get('/getRoomMessages', ash(async (req, res, next) => {
-  let { user } = req;
+  const { user } = req;
   let { chatRoomId, page, max } = req.query;
 
   if (!chatRoomId)

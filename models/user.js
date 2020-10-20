@@ -69,6 +69,8 @@ module.exports = (sequelize, DataTypes) => {
     lattitude: DataTypes.FLOAT,
     longitude: DataTypes.FLOAT,
 
+    requestCount: DataTypes.INTEGER,
+
     role: DataTypes.STRING
   }, {
     sequelize,
