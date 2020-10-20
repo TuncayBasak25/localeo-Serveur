@@ -71,7 +71,7 @@ router.get('/getNewMessages', ash(async (req, res, next) => {
     return;
   }
 
-  res.send( newMessages );
+  res.send( { newMessages: newMessages } );
 }));
 
 router.get('/getChatRoom', ash(async (req, res, next) => {
