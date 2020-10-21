@@ -72,6 +72,7 @@ app.use('/API/user/register', require('./routes/API/user/register'));
 app.use('/API/user/login', require('./routes/API/user/login'));
 app.use('/API/user/logout', require('./routes/API/user/logout'));
 app.use('/API/user/update', require('./routes/API/user/update'));
+app.use('/API/user/read', require('./routes/API/user/read'));
 
 app.use('/API/article/create', require('./routes/API/article/create'));
 app.use('/API/article/read', require('./routes/API/article/read'));
