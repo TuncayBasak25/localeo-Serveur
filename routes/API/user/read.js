@@ -38,7 +38,7 @@ router.get('/', ash(async (req, res, next) => {
     include: [ db.Avatar ]
   });
 
-  if (user.Avatar) user.Avatar = user.Avatar.toString('base64');
+  if (user.Avatar) user.Avatar.data = user.Avatar.data.toString('base64');
 
   res.send( { user: user } );
 }));
