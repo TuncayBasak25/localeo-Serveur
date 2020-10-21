@@ -97,14 +97,14 @@ router.get('/getChatRoom', ash(async (req, res, next) => {
       [Op.and]: [
         {
           [Op.or]: [
-            { PosterId: corresponderId },
-            { DestinaterId: corresponderId }
+            { SellerId: corresponderId },
+            { BuyerId: corresponderId }
           ]
         },
         {
           [Op.or]: [
-            { PosterId: user.dataValues.id },
-            { DestinaterId: user.dataValues.id }
+            { SellerId: user.dataValues.id },
+            { BuyerId: user.dataValues.id }
           ]
         }
       ]
