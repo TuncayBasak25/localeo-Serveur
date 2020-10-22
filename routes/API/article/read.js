@@ -41,6 +41,14 @@ router.get('/', ash(async (req, res, next) => {
   res.send( { article: article } );
 }));
 
+router.get('/getCategories', ash(async (req, res, next) => {
+  const categories = await db.Category.findAll({
+    include: [ db.SousCategory ]
+  });
+
+  res.send( categories );
+}));
+
 router.get('/getArticleOf', ash(async (req, res, next) => {
   let { user } = req;
   let { sellerId, page, max } = req.query;

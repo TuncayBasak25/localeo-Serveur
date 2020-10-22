@@ -34,6 +34,28 @@ var server = http.createServer(app);
  .then( async () => {
    const db = require('../models/index');
 
+   const categories = [];
+   categories[0] = await db.Category.create( { name: "accessoire" } );
+   categories[1] = await db.Category.create( { name: "meuble" } );
+   categories[2] = await db.Category.create( { name: "hightech" } );
+   categories[3] = await db.Category.create( { name: "vetement" } );
+
+   await categories[0].createSousCategory( { name: "montre" } );
+   await categories[0].createSousCategory( { name: "lunette" } );
+   await categories[0].createSousCategory( { name: "sacoche" } );
+
+   await categories[1].createSousCategory( { name: "table" } );
+   await categories[1].createSousCategory( { name: "chaise" } );
+
+   await categories[2].createSousCategory( { name: "smartphone" } );
+   await categories[2].createSousCategory( { name: "ordinateur" } );
+   await categories[2].createSousCategory( { name: "accessoire" } );
+   await categories[2].createSousCategory( { name: "tablette" } );
+
+   await categories[3].createSousCategory( { name: "robe" } );
+   await categories[3].createSousCategory( { name: "chemise" } );
+   await categories[3].createSousCategory( { name: "manteau" } );
+
    const tuncay = await db.User.create({
      username: 'tuncay',
      email: 'tuncay.basak@outlook.com',
