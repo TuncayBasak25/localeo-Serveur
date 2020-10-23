@@ -31,7 +31,7 @@ router.post('/', ash(async (req, res, next) => {
 
   let sousCategories = await db.Category.findAll();
   let sousCategoryList = [];
-  for (let sousCategory of sousCategories) sousCategoryList.push(category.dataValues.name);
+  for (let sousCategory of sousCategories) sousCategoryList.push(sousCategory.dataValues.name);
 
   const articleSchema = Joi.object({
     title: Joi.string().min(4).max(16).required(),
