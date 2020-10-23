@@ -35,7 +35,7 @@ const newUserSchema = Joi.object({
   firstname: Joi.string().min(4).max(16),
   lastname: Joi.string().min(4).max(16),
   address: Joi.string().max(256),
-  lattitude: Joi.number(),
+  latitude: Joi.number(),
   longitude: Joi.number(),
 
   password: Joi.string().min(8).max(256),

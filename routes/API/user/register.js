@@ -23,7 +23,7 @@ const userSchema = Joi.object({
   phone: Joi.string().min(10).max(10),
   address: Joi.string().min(4).max(255),
 
-  lattitude: Joi.number(),
+  latitude: Joi.number(),
   longitude: Joi.number(),
 
   avatar: Joi.string().max(50000)

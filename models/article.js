@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
     title: DataTypes.STRING,
     description: DataTypes.STRING,
     price: DataTypes.INTEGER,
-    lattitude: DataTypes.FLOAT,
+    latitude: DataTypes.FLOAT,
     longitude: DataTypes.FLOAT,
     sousCategory: DataTypes.STRING
   }, {

@@ -66,7 +66,7 @@ module.exports = (sequelize, DataTypes) => {
     lastname: DataTypes.STRING,
     phone: DataTypes.STRING,
     address: DataTypes.STRING,
-    lattitude: DataTypes.FLOAT,
+    latitude: DataTypes.FLOAT,
     longitude: DataTypes.FLOAT,
 
     requestCount: DataTypes.INTEGER,

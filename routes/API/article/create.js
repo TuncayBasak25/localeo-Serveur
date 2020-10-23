@@ -37,7 +37,7 @@ router.post('/', ash(async (req, res, next) => {
     title: Joi.string().min(4).max(16).required(),
     description: Joi.string().min(4).max(255).required(),
     price: Joi.number().integer().min(1).max(1000).required(),
-    lattitude: Joi.number(),
+    latitude: Joi.number(),
     longitude: Joi.number(),
     category: Joi.string().valid(...categoryList),
     sousCategory: Joi.string().valid(...sousCategoryList)
