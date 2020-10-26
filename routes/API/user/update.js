@@ -51,9 +51,9 @@ router.post('/', ash(async (req, res, next) => {
 
   if (newUser)
   {
-    for (let entry of Object.entries(newUser))
+    for (let ([entry, value]) of Object.entries(newUser))
     {
-      if (entry !== 'password' && entry !== 'avatar') user[entry] = newUser[entry];
+      if (entry !== 'password' && entry !== 'avatar') user[entry] = value;
     }
     await user.save();
   }
