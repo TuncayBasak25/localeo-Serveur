@@ -129,7 +129,10 @@ router.get('/search', ash(async (req, res, next) => {
   {
     categories = categories.split('-');
 
-    where[[Op.and]] = [];
+    where = {
+      ...where,
+      [Op.and]: []
+    }
 
     for (let category of categories)
     {
@@ -137,19 +140,17 @@ router.get('/search', ash(async (req, res, next) => {
         category: category
       });
     }
-  }
 
-  if (sousCategories && sousCategories !== '')
-  {
-    sousCategories = sousCategories.split('-');
-
-    if (!where[[Op.and]]) where[[Op.and]] = [];
-
-    for (let sousCategory of sousCategories)
+    if (sousCategories && sousCategories !== '')
     {
-      where[Op.and].push({
-        sousCategory: sousCategory
-      });
+      sousCategories = sousCategories.split('-');
+
+      for (let sousCategory of sousCategories)
+      {
+        where[Op.and].push({
+          sousCategory: sousCategory
+        });
+      }
     }
   }
 
