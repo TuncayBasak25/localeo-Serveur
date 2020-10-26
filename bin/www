@@ -61,90 +61,169 @@ var server = http.createServer(app);
      email: 'tuncay.basak@outlook.com',
      role: 'admin'
    });
-
    let hash = await bcrypt.hash('12345678', salt);
    tuncay.createUserSecret({ password: hash, sessionTokens: '{}' });
+   let avatar = await fs.readFileSync('./src/avatar/tuncay.jpg');
+   await tuncay.createAvatar({ data: avatar });
 
    const olivier = await db.User.create({
      username: 'olivier',
      email: 'olivier@outlook.com',
-     password: 'benlaura',
      role: 'admin'
    });
-
    hash = await bcrypt.hash('benlaura', salt);
    olivier.createUserSecret({ password: hash, sessionTokens: '{}' });
-
-
-   let avatar = await fs.readFileSync('./src/avatar/tuncay.jpg');
-   await tuncay.createAvatar({ data: avatar });
-
    avatar = await fs.readFileSync('./src/avatar/citizen.jpg');
    await olivier.createAvatar({ data: avatar });
 
-   let articleImages = [
-     await fs.readFileSync('./src/article/destroyer.jpg'),
-     await fs.readFileSync('./src/article/galaxyA40.jpg'),
-     await fs.readFileSync('./src/article/usbkey.jpg'),
-     await fs.readFileSync('./src/article/watch.jpg')
-   ];
+   const xavier = await db.User.create({
+     username: 'xavier',
+     email: 'xavier@outlook.com',
+     role: 'user'
+   });
+   hash = await bcrypt.hash('12345678', salt);
+   xavier.createUserSecret({ password: hash, sessionTokens: '{}' });
+   avatar = await fs.readFileSync('./src/avatar/xavier.jpg');
+   await xavier.createAvatar({ data: avatar });
 
-   let articleTitle = [
-     'Destroyer class XQR3580',
-     'Galaxy A40 comme neuf',
-     'Clé usb fonctionnelle 16Gb',
-     'Montre couleur bronze'
-   ];
+   const batman = await db.User.create({
+     username: 'batman',
+     email: 'batman@outlook.com',
+     role: 'user'
+   });
+   hash = await bcrypt.hash('12345678', salt);
+   batman.createUserSecret({ password: hash, sessionTokens: '{}' });
+   avatar = await fs.readFileSync('./src/avatar/batman.jpg');
+   await batman.createAvatar({ data: avatar });
 
-   let articleDescription = [
-     'Destroyer en bon état, année 3483',
-     'Téléphone comme neuf.',
-     'Usb fonctionnelle.',
-     'Montre comme neuf.'
-   ];
+   const skynet = await db.User.create({
+     username: 'skynet',
+     email: 'skynet@outlook.com',
+     role: 'user'
+   });
+   hash = await bcrypt.hash('12345678', salt);
+   skynet.createUserSecret({ password: hash, sessionTokens: '{}' });
+   avatar = await fs.readFileSync('./src/avatar/skynet.jpg');
+   await skynet.createAvatar({ data: avatar });
 
-   let articlePrice = [
-     950,
-     125,
-     5,
-     230
-   ];
 
-   let articleGeolocation = [
-     {
-       lattitude: 46.787179,
-       longitude: 3.461600
-     },
-     {
-       lattitude: 46.687179,
-       longitude: 3.761600
-     },
-     {
-       lattitude: 46.487179,
-       longitude: 3.361600
-     },
-     {
-       lattitude: 46.987179,
-       longitude: 3.161600
-     }
-   ];
+  let article = await tuncay.createArticle({
+     title: 'Destroyer',
+     description: 'Destroyer en bon état, année 3483',
+     price: Math.floor(Math.random() * 1000),
+     latitude: 46 + Math.random(),
+     longitude: 3 + Math.random()
+   });
+   await article.createImage({ data: await fs.readFileSync('./src/article/destroyer.jpg') });
 
-   for (let i=0; i<articlePrice.length; i++)
-   {
-     let image = { data: articleImages[i] };
-     let article = {
-       title: articleTitle[i],
-       description: articleDescription[i],
-       price: articlePrice[i],
-       lattitude: articleGeolocation[i].lattitude,
-       longitude: articleGeolocation[i].longitude
-     }
+  article = await tuncay.createArticle({
+     title: 'Galaxy A40',
+     description: 'Bla bla',
+     price: Math.floor(Math.random() * 1000),
+     latitude: 46 + Math.random(),
+     longitude: 3 + Math.random()
+   });
+   await article.createImage({ data: await fs.readFileSync('./src/article/galaxyA40.jpg') });
 
-     article = await tuncay.createArticle(article);
-     //article = await db.Article.create(article);
+  article = await tuncay.createArticle({
+     title: 'Montre',
+     description: 'Montre bronze',
+     price: Math.floor(Math.random() * 1000),
+     latitude: 46 + Math.random(),
+     longitude: 3 + Math.random()
+   });
+   await article.createImage({ data: await fs.readFileSync('./src/article/watch.jpg') });
 
-     await article.createImage(image);
-   }
+  article = await tuncay.createArticle({
+     title: 'Clé USB',
+     description: 'Clé usb',
+     price: Math.floor(Math.random() * 1000),
+     latitude: 46 + Math.random(),
+     longitude: 3 + Math.random()
+   });
+   await article.createImage({ data: await fs.readFileSync('./src/article/usbkey.jpg') });
+
+  article = await xavier.createArticle({
+     title: 'X-Jet',
+     description: 'X-Jet a 2.000.000 km seulemnt',
+     price: Math.floor(Math.random() * 1000),
+     latitude: 46 + Math.random(),
+     longitude: 3 + Math.random()
+   });
+   await article.createImage({ data: await fs.readFileSync('./src/article/xjet.jpg') });
+
+  article = await xavier.createArticle({
+     title: 'Cerebro',
+     description: 'Cerebro en bon état',
+     price: Math.floor(Math.random() * 1000),
+     latitude: 46 + Math.random(),
+     longitude: 3 + Math.random()
+   });
+   await article.createImage({ data: await fs.readFileSync('./src/article/cerebro.jpg') });
+
+  article = await batman.createArticle({
+     title: 'Battarang',
+     description: "J'ai plus besoin de ça...",
+     price: Math.floor(Math.random() * 1000),
+     latitude: 46 + Math.random(),
+     longitude: 3 + Math.random()
+   });
+   await article.createImage({ data: await fs.readFileSync('./src/article/battarang.jpg') });
+
+  article = await batman.createArticle({
+     title: 'BatMobile',
+     description: "Je vais acheter le nouveau model...",
+     price: Math.floor(Math.random() * 1000),
+     latitude: 46 + Math.random(),
+     longitude: 3 + Math.random()
+   });
+   await article.createImage({ data: await fs.readFileSync('./src/article/batmobile.jpg') });
+
+  article = await batman.createArticle({
+     title: 'Bat car',
+     description: "Bla bla",
+     price: Math.floor(Math.random() * 1000),
+     latitude: 46 + Math.random(),
+     longitude: 3 + Math.random()
+   });
+   await article.createImage({ data: await fs.readFileSync('./src/article/batCar.jpg') });
+
+  article = await skynet.createArticle({
+     title: 'T-800 neuve',
+     description: "Bla bla",
+     price: Math.floor(Math.random() * 1000),
+     latitude: 46 + Math.random(),
+     longitude: 3 + Math.random()
+   });
+   await article.createImage({ data: await fs.readFileSync('./src/article/t800neuve.jpg') });
+
+  article = await skynet.createArticle({
+     title: 'T-800 vieux',
+     description: "Bla bla",
+     price: Math.floor(Math.random() * 1000),
+     latitude: 46 + Math.random(),
+     longitude: 3 + Math.random()
+   });
+   await article.createImage({ data: await fs.readFileSync('./src/article/t800vieux.jpg') });
+
+  article = await skynet.createArticle({
+     title: 'T-1000',
+     description: "Bla bla",
+     price: Math.floor(Math.random() * 1000),
+     latitude: 46 + Math.random(),
+     longitude: 3 + Math.random()
+   });
+   await article.createImage({ data: await fs.readFileSync('./src/article/t1000.jpg') });
+
+  article = await skynet.createArticle({
+     title: 'T-3000',
+     description: "Bla bla",
+     price: Math.floor(Math.random() * 1000),
+     latitude: 46 + Math.random(),
+     longitude: 3 + Math.random()
+   });
+   await article.createImage({ data: await fs.readFileSync('./src/article/t3000.jpg') });
+
 
    server.listen(port, () => {
      debug('Express server listening on port ' + server.address().port);
