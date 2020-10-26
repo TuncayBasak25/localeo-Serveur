@@ -20,11 +20,6 @@ router.all('/*', ash(async (req, res, next) => {
     res.send({ error: "You are not connected." });
     return;
   }
-
-  let avatar = await req.user.getAvatar();
-  req.user.Avatar = avatar;
-  res.send(user);
-
   next();
 }));
 
