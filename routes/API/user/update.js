@@ -65,8 +65,10 @@ router.post('/', ash(async (req, res, next) => {
 
   if (newUser.avatar)
   {
-    user.avatar.data = new Buffer.alloc(newUser.avatar.length, newUser.avatar, 'base64');
-    await user.avatar.save();
+    let avatar = await user.getAvatar();
+
+    avatar.data = new Buffer.alloc(newUser.avatar.length, newUser.avatar, 'base64');
+    await avatar.save();
   }
 
   if (newUser.password)
