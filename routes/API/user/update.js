@@ -39,7 +39,7 @@ const newUserSchema = Joi.object({
 });
 
 router.post('/', ash(async (req, res, next) => {
-  const { user } = req;
+  const user = await db.User.findOne( { where: { id: req.user.id } } );
   const { newUser } = req.body;
 
   let val = newUserSchema.validate(newUser);
