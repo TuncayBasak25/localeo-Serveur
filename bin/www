@@ -79,6 +79,9 @@ var server = http.createServer(app);
    let avatar = await fs.readFileSync('./src/avatar/tuncay.jpg');
    await tuncay.createAvatar({ data: avatar });
 
+   avatar = await fs.readFileSync('./src/avatar/citizen.jpg');
+   await olivier.createAvatar({ data: avatar });
+
    let articleImages = [
      await fs.readFileSync('./src/article/destroyer.jpg'),
      await fs.readFileSync('./src/article/galaxyA40.jpg'),
