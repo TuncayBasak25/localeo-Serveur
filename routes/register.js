@@ -8,7 +8,7 @@ const ash = require('express-async-handler');
 const bcrypt = require('bcrypt');
 const salt = 10;
 
-const Joi = require('joi');
+const Joi = require('joi');//lol
 
 const userSchema = Joi.object({
   username: Joi.string().min(4).max(16).required(),
