@@ -21,7 +21,7 @@ app.use(session({
   secret: 'keyboard cat',
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: false }
+  cookie: { secure: false, httpOnly: false }
 }));
 
 var sess = {
@@ -32,6 +32,7 @@ var sess = {
 if (app.get('env') === 'production') {
   app.set('trust proxy', 1) // trust first proxy
   sess.cookie.secure = false // serve secure cookies
+  sess.cookie.httpOnly = false
 }
 
 app.use(session(sess));
