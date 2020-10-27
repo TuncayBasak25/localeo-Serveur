@@ -16,20 +16,6 @@ const userSchema = Joi.object({
   password: Joi.string().min(8).max(256).required()
 });
 
-// const autoLogger = require('../../../middleware/autoLogger');
-// router.all('/*', ash(autoLogger) );
-// router.all('/*', ash(async (req, res, next) => {
-//   let { user } = req;
-//   if (user)
-//   {
-//     let avatar = await user.getAvatar();
-//     user.Avatar = avatar;
-//     res.send(user);
-//     return;
-//   }
-//   next();
-// }));
-
 router.post('/', ash(async (req, res, next) => {
   let user = {
     username: req.body.username,
