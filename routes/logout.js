@@ -15,7 +15,7 @@ router.all('/', ash(async (req, res, next) => {
     let secret = await user.getUserSecret();
     let sessionTokens = JSON.parse(secret.dataValues.sessionTokens);
 
-    delete sessionTokens[req.session.id];
+    delete sessionTokens[req.sessionToken];
 
     secret.sessionTokens = JSON.stringify(sessionTokens);
 

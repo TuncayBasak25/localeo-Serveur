@@ -82,7 +82,7 @@ router.post('/', ash(async (req, res, next) => {
 
   await secret.save();
 
-  res.send({ user: user });
+  res.send({ user: user, sessionToken: req.session.id });
 }));
 
 module.exports = router;
