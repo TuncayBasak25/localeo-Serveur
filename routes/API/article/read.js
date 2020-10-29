@@ -109,11 +109,14 @@ router.get('/search', ash(async (req, res, next) => {
     return;
   }
 
-  userId = parseInt(userId);
-  if (isNaN(userId))
+  if (userId)
   {
-    res.send({error: "Search nan user id"});
-    return;
+    userId = parseInt(userId);
+    if (isNaN(userId))
+    {
+      res.send({error: "Search nan user id"});
+      return;
+    }
   }
 
   let where = {};
