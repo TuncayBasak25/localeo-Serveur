@@ -29,16 +29,16 @@ const userSchema = Joi.object({
   avatar: Joi.string().max(50000)
 });
 
-const autoLogger = require('../../../middleware/autoLogger');
-router.all('/*', ash(autoLogger) );
-router.all('/*', ash(async (req, res, next) => {
-  if (req.user)
-  {
-    res.send({ error: "You are already connected" });
-    return;
-  }
-  next();
-}));
+// const autoLogger = require('../../../middleware/autoLogger');
+// router.all('/*', ash(autoLogger) );
+// router.all('/*', ash(async (req, res, next) => {
+//   if (req.user)
+//   {
+//     res.send({ error: "You are already connected" });
+//     return;
+//   }
+//   next();
+// }));
 
 router.post('/', ash(async (req, res, next) => {
   const { userInputs } = req.body;
