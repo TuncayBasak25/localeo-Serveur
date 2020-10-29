@@ -85,7 +85,11 @@ router.get('/getArticleOf', ash(async (req, res, next) => {
 
   let articleList = await seller.getArticles({
     limit: max,
-    offset: (page-1) * max
+    offset: (page-1) * max,
+    include: {
+      model: db.Image,
+      attributes: ['id']
+    }
   });
 
   res.send( articleList );

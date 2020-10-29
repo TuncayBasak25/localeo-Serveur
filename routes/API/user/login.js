@@ -60,12 +60,26 @@ router.post('/', ash(async (req, res, next) => {
     return;
   }
 
+  //Destroy other possible tokens
+  // const secretList = await db.UserSecret.findAll({
+  //   where: {
+  //     sessionTokens: {
+  //       [Op.substring]: req.session.id
+  //     }
+  //   }
+  // });
+  //
+  // for (let lostSecret of secretList)
+  // {
+  //   let sessionTokens = JSON.parse(lostSecret.dataValues.sessionTokens);
+  //   delete sessionTokens[req.session.id];
+  //   lostSecret.sessionTokens = JSON.stringify(sessionTokens);
+  //   await lostSecret.save();
+  // }
+
   let sessionTokens = JSON.parse(secret.dataValues.sessionTokens);
-
   sessionTokens[req.session.id] = true;
-
   secret.sessionTokens = JSON.stringify(sessionTokens);
-
   await secret.save();
 
   res.send({ user: user, sessionToken: req.session.id });
