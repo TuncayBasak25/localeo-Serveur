@@ -96,7 +96,7 @@ router.get('/getArticleOf', ash(async (req, res, next) => {
 }));
 
 router.get('/search', ash(async (req, res, next) => {
-  let { words, categories, sousCategories, page, max } = req.query;
+  let { words, userId, categories, sousCategories, page, max } = req.query;
 
   if (!page) page = 1;
   page = parseInt(page);
@@ -109,7 +109,16 @@ router.get('/search', ash(async (req, res, next) => {
     return;
   }
 
+  userId = parseInt(userId);
+  if (isNaN(userId))
+  {
+    res.send({error: "Search nan user id"});
+    return;
+  }
+
   let where = {};
+
+  if (userId) where.UserId = userId;
 
   if (words && words !== '')
   {
@@ -126,6 +135,16 @@ router.get('/search', ash(async (req, res, next) => {
           [Op.iLike]: '%' + word + '%'
         }
       });
+    }
+
+    if (userId)
+    {
+      where = {
+        [Op.and]: [
+          {UserId: userId},
+          where
+        ]
+      }
     }
   }
 
